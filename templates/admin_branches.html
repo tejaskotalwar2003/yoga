@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Branches</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+display:flex;
+background:#eef2f7;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:230px;
+height:100vh;
+background:#0f766e;
+color:white;
+padding:25px;
+display:flex;
+flex-direction:column;
+position:fixed;
+}
+
+.sidebar h2{
+margin-bottom:40px;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#14b8a6;
+}
+
+.logout{
+margin-top:auto;
+background:#dc2626;
+text-align:center;
+}
+
+.logout:hover{
+background:#b91c1c;
+}
+
+/* MAIN */
+
+.main{
+margin-left:230px;
+width:100%;
+padding:30px;
+}
+
+/* HEADER */
+
+.header{
+background:#0f766e;
+color:white;
+padding:16px 20px;
+border-radius:10px;
+margin-bottom:25px;
+}
+
+.header h1{
+font-size:20px;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+/* ADD BUTTON */
+
+.add-btn{
+background:#0f766e;
+color:white;
+padding:10px 18px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.add-btn:hover{
+background:#14b8a6;
+}
+
+/* SEARCH */
+
+.search-box input{
+padding:10px 14px;
+width:260px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+font-size:14px;
+}
+
+.search-box input:focus{
+border-color:#0f766e;
+}
+
+/* FORM */
+
+.form-box{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+display:none;
+margin-bottom:25px;
+}
+
+.form-box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* TABLE CARD */
+
+.table-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#0f766e;
+color:white;
+padding:14px;
+text-align:left;
+}
+
+td{
+padding:14px;
+border-bottom:1px solid #eee;
+}
+
+tr:hover{
+background:#f9fafb;
+}
+
+/* MAP BUTTON */
+
+.map-btn{
+background:#16a34a;
+color:white;
+padding:6px 14px;
+border-radius:6px;
+text-decoration:none;
+display:inline-block;
+white-space:nowrap;
+font-size:13px;
+}
+
+.map-btn:hover{
+background:#15803d;
+}
+
+/* ACTION BUTTONS */
+
+.edit{
+background:#2563eb;
+color:white;
+padding:6px 12px;
+border-radius:6px;
+text-decoration:none;
+margin-right:6px;
+font-size:13px;
+}
+
+.edit:hover{
+background:#1d4ed8;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+padding:6px 12px;
+border-radius:6px;
+text-decoration:none;
+font-size:13px;
+}
+
+.delete:hover{
+background:#b91c1c;
+}
+
+td:last-child{
+white-space:nowrap;
+}
+
+/* ===== POPUP ===== */
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.popup-content{
+background:white;
+padding:35px;
+border-radius:12px;
+text-align:center;
+max-width:350px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Nitya Yog</h2>
+
+<a href="/admin_dashboard">Dashboard</a>
+<a href="/admin/users">Registrations</a>
+<a href="/admin/reviews">Reviews</a>
+<a href="/admin/branches">Branches</a>
+<a href="/admin/gallery">Gallery</a>
+<a href="/admin/events">Events</a>
+
+<a class="logout" href="/admin/logout">Logout</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+<h1>Manage Branches</h1>
+</div>
+
+<div class="toolbar">
+
+<button class="add-btn" onclick="toggleForm()">Add Branch</button>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Search branch..." onkeyup="searchBranch()">
+</div>
+
+</div>
+
+<!-- FORM -->
+
+<div class="form-box" id="branchForm">
+
+<h3>Add New Branch</h3>
+
+<!-- ✅ UPDATED FORM -->
+<form id="branchFormSubmit">
+
+<input type="text" name="name" placeholder="Branch Name" required>
+<input type="text" name="address" placeholder="Landmark (Example: Near Jain Mandir)" required>
+<input type="text" name="batch_time" placeholder="Batch Time (Example: 6:00 AM)" required>
+<input type="text" name="trainer" placeholder="Trainer Name" required>
+<input type="text" name="contact" placeholder="Contact Number" required>
+<input type="text" name="map_link" placeholder="Google Map Link" required>
+
+<button class="add-btn">Add Branch</button>
+
+</form>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-card">
+
+<table id="branchTable">
+
+<tr>
+<th>Branch</th>
+<th>Address</th>
+<th>Batch Time</th>
+<th>Trainer</th>
+<th>Contact</th>
+<th>Map</th>
+<th>Action</th>
+</tr>
+{% for branch in branches %}
+
+<tr>
+    <td>{{branch.name}}</td>
+    <td>{{branch.address}}</td>
+    <td>{{branch.batch_time}}</td>
+    <td>{{branch.trainer}}</td>
+    <td>{{branch.contact}}</td>
+
+    <td>
+        <a href="{{branch.map_link}}" target="_blank" class="map-btn">
+        Open Map
+        </a>
+    </td>
+
+    <td>
+        <button class="edit" onclick="toggleEdit({{branch.id}})">Edit</button>
+
+        <form action="/delete_branch/{{branch.id}}" method="post" style="display:inline;">
+        <button class="delete">Delete</button>
+        </form>
+    </td>
+</tr>
+
+<!-- ✅ MOVE THIS INSIDE LOOP -->
+<tr id="edit-row-{{branch.id}}" style="display:none;background:#f9fafb">
+<td colspan="7">
+
+    <form action="/edit_branch/{{branch.id}}" method="post">
+
+<input type="text" name="name" value="{{branch.name}}">
+<input type="text" name="address" value="{{branch.address}}">
+<input type="text" name="batch_time" value="{{branch.batch_time}}">
+<input type="text" name="trainer" value="{{branch.trainer}}">
+<input type="text" name="contact" value="{{branch.contact}}">
+<input type="text" name="map_link" value="{{branch.map_link}}">
+
+<button type="button" onclick="toggleEdit({{branch.id}})">Cancel</button>
+<button type="submit">Update</button>
+
+</form>
+
+</td>
+</tr>
+
+{% endfor %}
+
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ===== POPUPS ===== -->
+
+<div id="loadingPopup" class="popup">
+<div class="popup-content">
+<h3>Adding Branch...</h3>
+<p>Please wait...</p>
+</div>
+</div>
+
+<div id="successPopup" class="popup">
+<div class="popup-content">
+<h3>Branch Added Successfully ✅</h3>
+<p>Refreshing page...</p>
+</div>
+</div>
+
+<script>
+
+/* TOGGLE FORM */
+function toggleForm(){
+let form=document.getElementById("branchForm")
+form.style.display=form.style.display==="block"?"none":"block"
+}
+
+/* SEARCH */
+function searchBranch(){
+let input=document.getElementById("searchInput").value.toLowerCase()
+let rows=document.querySelectorAll("#branchTable tr")
+
+rows.forEach(function(row,index){
+if(index===0) return
+let text=row.innerText.toLowerCase()
+row.style.display=text.includes(input)?"":"none"
+})
+}
+
+/* SUBMIT WITH POPUP */
+
+const branchFormSubmit = document.getElementById("branchFormSubmit");
+
+branchFormSubmit.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const formData = new FormData(branchFormSubmit);
+
+document.getElementById("loadingPopup").style.display="flex";
+
+try{
+
+const response = await fetch("/add_branch",{
+method:"POST",
+body:formData
+});
+
+await response.json();
+
+document.getElementById("loadingPopup").style.display="none";
+
+if(response.ok){
+
+document.getElementById("successPopup").style.display="flex";
+
+branchFormSubmit.reset();
+
+setTimeout(()=>{
+window.location.reload();
+},2000);
+
+}else{
+alert("Error adding branch");
+}
+
+}catch(err){
+document.getElementById("loadingPopup").style.display="none";
+alert("Server Error");
+}
+
+});
+
+function toggleEdit(id){
+
+let rows=document.querySelectorAll("[id^='edit-row-']")
+
+rows.forEach(function(row){
+if(row.id!=="edit-row-"+id){
+row.style.display="none"
+}
+})
+
+let current=document.getElementById("edit-row-"+id)
+
+current.style.display=current.style.display==="table-row"?"none":"table-row"
+
+}
+
+</script>
+
+</body>
+</html>

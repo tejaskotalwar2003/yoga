@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Yoga Photo Gallery - Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f3f8f8;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:600;
+font-size:20px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+object-fit:contain;
+background:white;
+padding:5px;
+border-radius:8px;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+nav a.active{
+color:#14b8a6;
+border-bottom:2px solid #14b8a6;
+}
+
+/* dropdown */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+/* join button */
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+/* mobile menu */
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+.dropdown-menu{
+position:static;
+display:none;
+background:#0f766e;
+box-shadow:none;
+}
+
+.dropdown-menu a{
+color:white;
+}
+
+}
+
+/* HEADER */
+
+.header{
+text-align:center;
+padding:60px 10%;
+background:#f9fbfb;
+}
+
+.header h1{
+color:#0f766e;
+font-size:36px;
+margin-bottom:10px;
+}
+
+.header p{
+color:#666;
+}
+
+/* GALLERY */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:40px 10%;
+}
+
+.gallery img{
+width:100%;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.gallery img:hover{
+transform:scale(1.07);
+}
+
+/* LIGHTBOX */
+
+.lightbox{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.lightbox img{
+max-width:85%;
+max-height:85%;
+border-radius:10px;
+}
+
+.lightbox span{
+position:absolute;
+top:30px;
+right:40px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.header{
+padding:50px 6% 20px;
+}
+
+.gallery{
+padding:30px 6%;
+gap:15px;
+}
+
+.header h1{
+font-size:28px;
+}
+
+}
+
+.show-dropdown{
+display:block !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+<img src="/static/images/logo1.png">
+<span>Nitya Yog Samiti</span>
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+<li><a href="/aboutus">About Us</a></li>
+<li><a href="/branches">Branches</a></li>
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+
+<a href="#" class="media-link">Media <i class="fa fa-caret-down"></i></a>
+
+<ul class="dropdown-menu">
+
+<li><a href="/gallery" class="active">Photo Gallery</a></li>
+<li><a href="/videos">Videos</a></li>
+<li><a href="/events">Events</a></li>
+<li><a href="/news">News</a></li>
+
+</ul>
+
+</li>
+
+<li><a href="/committee">Committee</a></li>
+<li><a href="/faq">FAQ</a></li>
+<li><a href="/developer">Developer</a></li>
+
+<li>
+<a href="/register" class="join-btn">Join Class</a>
+</li>
+
+</ul>
+
+</nav>
+
+<!-- HEADER -->
+
+<div class="header">
+
+<h1>Yoga Photo Gallery</h1>
+<p>Moments from our yoga sessions and events</p>
+
+</div>
+
+<!-- GALLERY -->
+
+<div class="gallery">
+
+{% for img in images %}
+
+<img src="/static/uploads/{{img}}" onclick="openImg(this.src)">
+
+{% endfor %}
+
+</div>
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox" id="lightbox">
+
+<span onclick="closeImg()">×</span>
+<img id="lightbox-img">
+
+</div>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+function openImg(src){
+document.getElementById("lightbox").style.display="flex"
+document.getElementById("lightbox-img").src=src
+}
+
+function closeImg(){
+document.getElementById("lightbox").style.display="none"
+}
+
+/* mobile dropdown fix */
+
+document.querySelectorAll(".dropdown > a").forEach(item=>{
+item.addEventListener("click", function(e){
+
+if(window.innerWidth < 768){
+e.preventDefault()
+this.nextElementSibling.classList.toggle("show-dropdown")
+}
+
+})
+})
+
+</script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,306 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Registrations</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+display:flex;
+background:#eef2f7;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:230px;
+height:100vh;
+background:#0f766e;
+color:white;
+padding:25px;
+display:flex;
+flex-direction:column;
+position:fixed;
+}
+
+.sidebar h2{
+margin-bottom:40px;
+font-weight:600;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#14b8a6;
+}
+
+.sidebar .active{
+background:#14b8a6;
+}
+
+.sidebar .logout{
+margin-top:auto;
+background:#dc2626;
+text-align:center;
+}
+
+.sidebar .logout:hover{
+background:#b91c1c;
+}
+
+/* MAIN */
+
+.main{
+margin-left:200px;
+flex:1;
+padding:20px;
+}
+
+/* HEADER */
+
+.header{
+background:#0f766e;
+color:white;
+padding:16px 20px;
+border-radius:10px;
+margin-bottom:25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.header h1{
+font-size:20px;
+}
+
+/* SEARCH */
+
+.search-box input{
+padding:10px 14px;
+width:260px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+}
+
+.search-box input:focus{
+border-color:#0f766e;
+}
+
+/* TABLE CARD */
+
+.table-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+table-layout:fixed;
+}
+
+th{
+background:#0f766e;
+color:white;
+padding:14px;
+text-align:left;
+font-size:14px;
+}
+
+td{
+padding:14px;
+border-bottom:1px solid #eee;
+word-break:break-word;
+font-size:14px;
+}
+
+/* FIX ACTION COLUMN */
+
+th:last-child,
+td:last-child{
+width:150px;
+text-align:center;
+}
+
+/* ACTION BUTTONS */
+
+.action-buttons{
+display:flex;
+gap:8px;
+justify-content:center;
+}
+
+/* BUTTONS */
+
+button{
+padding:7px 14px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:13px;
+white-space:nowrap;
+}
+
+.edit{
+background:#2563eb;
+color:white;
+}
+
+.edit:hover{
+background:#1d4ed8;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+}
+
+.delete:hover{
+background:#b91c1c;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Admin Panel</h2>
+
+<a href="/admin_dashboard">Dashboard</a>
+<a class="active" href="/admin/users">Registrations</a>
+<a href="/admin/reviews">Reviews</a>
+<a href="/admin/branches">Branches</a>
+<a href="/admin/gallery">Gallery</a>
+<a href="/admin/events">Events</a>
+
+<a class="logout" href="/admin/logout">Logout</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+
+<h1>Registrations</h1>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Search registration..." onkeyup="searchUser()">
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table id="userTable">
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Age</th>
+<th>Mobile</th>
+<th>Address</th>
+<th>District</th>
+<th>State</th>
+<th>Health Problem</th>
+<th>Action</th>
+</tr>
+
+{% for user in users %}
+
+<tr>
+
+<td>{{user.id}}</td>
+<td>{{user.name}}</td>
+<td>{{user.age}}</td>
+<td>{{user.mobile}}</td>
+<td>{{user.address}}</td>
+<td>{{user.district}}</td>
+<td>{{user.state}}</td>
+<td>{{user.health_problem}}</td>
+
+<td>
+
+<div class="action-buttons">
+
+<a href="/admin/edit_user/{{user.id}}">
+<button class="edit">Edit</button>
+</a>
+
+<form action="/admin/delete_user/{{user.id}}" method="post">
+<button class="delete">Delete</button>
+</form>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+function searchUser(){
+
+let input=document.getElementById("searchInput").value.toLowerCase()
+
+let rows=document.querySelectorAll("#userTable tr")
+
+rows.forEach(function(row,index){
+
+if(index===0) return
+
+let text=row.innerText.toLowerCase()
+
+row.style.display=text.includes(input)?"":"none"
+
+})
+
+}
+
+</script>
+
+</body>
+
+</html>
+```

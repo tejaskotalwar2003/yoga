@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Reviews</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+display:flex;
+background:#eef2f7;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:240px;
+background:#0f766e;
+color:white;
+height:100vh;
+padding:25px;
+position:fixed;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+margin-bottom:40px;
+}
+
+.sidebar a{
+text-decoration:none;
+color:white;
+padding:12px;
+border-radius:8px;
+margin-bottom:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#14b8a6;
+}
+
+.logout{
+margin-top:auto;
+background:#dc2626;
+text-align:center;
+}
+
+/* MAIN */
+
+.main{
+margin-left:240px;
+width:100%;
+padding:30px;
+}
+
+/* HEADER */
+
+.header{
+background:#0f766e;
+color:white;
+padding:16px 20px;
+border-radius:10px;
+margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.header h1{
+font-size:20px;
+}
+
+/* SEARCH */
+
+.search-box input{
+padding:10px 15px;
+width:260px;
+border-radius:8px;
+border:none;
+outline:none;
+}
+
+/* TABLE CARD */
+
+.table-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+table-layout:fixed;
+}
+
+th{
+background:#0f766e;
+color:white;
+padding:16px;
+}
+
+td{
+padding:16px;
+border-bottom:1px solid #eee;
+word-break:break-word;
+vertical-align:middle;
+}
+
+/* FIX ACTION COLUMN WIDTH */
+
+th:last-child,
+td:last-child{
+width:160px;
+}
+
+/* TEXT BOX */
+
+.text-box{
+max-height:80px;
+overflow:auto;
+}
+
+/* IMAGE */
+
+.review-img{
+width:60px;
+height:60px;
+object-fit:cover;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* ACTION BUTTON CONTAINER */
+
+.action-buttons{
+display:flex;
+gap:10px;
+justify-content:center;
+align-items:center;
+}
+
+/* BUTTONS */
+
+button{
+border:none;
+padding:7px 14px;
+border-radius:6px;
+cursor:pointer;
+font-size:13px;
+white-space:nowrap;
+}
+
+.edit{
+background:#2563eb;
+color:white;
+}
+
+.edit:hover{
+background:#1d4ed8;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+}
+
+.delete:hover{
+background:#b91c1c;
+}
+
+.update{
+background:#0f766e;
+color:white;
+padding:8px 16px;
+}
+
+.update:hover{
+background:#14b8a6;
+}
+
+.cancel{
+background:#9ca3af;
+color:white;
+padding:8px 16px;
+}
+
+/* EDIT FORM */
+
+.edit-form{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:10px;
+padding-top:10px;
+}
+
+.edit-form input,
+.edit-form textarea{
+padding:8px;
+border:1px solid #ddd;
+border-radius:6px;
+}
+
+textarea{
+resize:none;
+height:60px;
+}
+
+.update-container{
+grid-column:1/-1;
+display:flex;
+justify-content:flex-end;
+gap:10px;
+}
+
+/* IMAGE POPUP */
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.popup img{
+max-width:80%;
+max-height:80%;
+border-radius:10px;
+}
+
+.popup span{
+position:absolute;
+top:25px;
+right:40px;
+font-size:35px;
+color:white;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Nitya Yog</h2>
+
+<a href="/admin_dashboard">Dashboard</a>
+<a href="/admin/users">Registrations</a>
+<a href="/admin/reviews">Reviews</a>
+<a href="/admin/branches">Branches</a>
+<a href="/admin/gallery">Gallery</a>
+<a href="/admin/events">Events</a>
+
+<a class="logout" href="/admin/logout">Logout</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+
+<h1>Manage Reviews</h1>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search name or city..." onkeyup="searchReviews()">
+</div>
+
+</div>
+
+<div class="table-card">
+
+<table>
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>City</th>
+<th>Rating</th>
+<th>Health Improvement</th>
+<th>Message</th>
+<th>Photo</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for review in reviews %}
+
+<tr>
+
+<td>{{review.id}}</td>
+<td>{{review.name}}</td>
+<td>{{review.city}}</td>
+
+<td>{{ "⭐" * review.rating }}</td>
+
+<td>
+<div class="text-box">{{review.health_improvement}}</div>
+</td>
+
+<td>
+<div class="text-box">{{review.message}}</div>
+</td>
+
+<td>
+
+{% if review.photo %}
+<img class="review-img"
+src="/static/uploads/{{review.photo}}"
+onclick="showImage(this.src)">
+{% endif %}
+
+</td>
+
+<td>
+
+<div class="action-buttons">
+
+<button class="edit" onclick="toggleEdit({{review.id}})">
+Edit
+</button>
+
+<form action="/admin/delete_review/{{review.id}}" method="post">
+<button class="delete" onclick="return confirm('Delete review?')">
+Delete
+</button>
+</form>
+
+</div>
+
+</td>
+
+</tr>
+
+<tr id="edit-row-{{review.id}}" style="display:none;background:#f9fafb">
+
+<td colspan="8">
+
+<form action="/admin/update_review/{{review.id}}" method="post" enctype="multipart/form-data" class="edit-form">
+
+<input type="text" name="name" value="{{review.name}}">
+<input type="text" name="city" value="{{review.city}}">
+<input type="number" name="rating" value="{{review.rating}}">
+
+<textarea name="health_improvement">{{review.health_improvement}}</textarea>
+<textarea name="message">{{review.message}}</textarea>
+
+<div>
+<input type="file" name="photo">
+</div>
+
+<div class="update-container">
+
+<button type="button" class="cancel"
+onclick="toggleEdit({{review.id}})">
+Cancel
+</button>
+
+<button type="submit" class="update">
+Update
+</button>
+
+</div>
+
+</form>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- IMAGE POPUP -->
+
+<div class="popup" id="imagePopup" onclick="closeImage()">
+
+<span>&times;</span>
+
+<img id="popupImg">
+
+</div>
+
+<script>
+
+function toggleEdit(id){
+
+let rows=document.querySelectorAll("[id^='edit-row-']")
+
+rows.forEach(function(row){
+if(row.id!=="edit-row-"+id){
+row.style.display="none"
+}
+})
+
+let current=document.getElementById("edit-row-"+id)
+
+current.style.display=current.style.display==="table-row"?"none":"table-row"
+
+}
+
+function searchReviews(){
+
+let input=document.getElementById("searchInput").value.toLowerCase()
+
+let rows=document.querySelectorAll("tbody tr")
+
+for(let i=0;i<rows.length;i+=2){
+
+let dataRow=rows[i]
+let editRow=rows[i+1]
+
+let text=dataRow.innerText.toLowerCase()
+
+if(text.includes(input)){
+dataRow.style.display=""
+editRow.style.display="none"
+}else{
+dataRow.style.display="none"
+editRow.style.display="none"
+}
+
+}
+
+}
+
+function showImage(src){
+
+document.getElementById("popupImg").src=src
+document.getElementById("imagePopup").style.display="flex"
+
+}
+
+function closeImage(){
+
+document.getElementById("imagePopup").style.display="none"
+
+}
+
+</script>
+
+</body>
+</html>

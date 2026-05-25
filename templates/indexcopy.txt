@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f3f8f8;
+color:#333;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo img{
+width:60px;
+}
+
+.logo span{
+color:white;
+font-size:22px;
+font-weight:600;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+
+nav li{
+position:relative;
+}
+
+.dropdown-menu{
+
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+padding:10px 0;
+min-width:150px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
+}
+
+.dropdown-menu li{
+padding:8px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+text-decoration:none;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+.dropdown-menu li:hover{
+background:#f3f3f3;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+} 
+
+/* HERO */
+
+.hero{
+height:90vh;
+background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+url("https://images.unsplash.com/photo-1506126613408-eca07ce68773");
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+.hero h1{
+font-size:55px;
+}
+
+.hero p{
+font-size:22px;
+margin-top:10px;
+}
+
+.hero a{
+margin-top:25px;
+background:#14b8a6;
+padding:12px 25px;
+border-radius:30px;
+color:white;
+text-decoration:none;
+}
+
+/* SECTION */
+
+.section{
+padding:80px 10%;
+text-align:center;
+}
+
+.section h2{
+color:#0f766e;
+margin-bottom:20px;
+}
+
+/* CARDS */
+
+.cards{
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:25px;
+width:260px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* GURU */
+
+.guru-box{
+display:flex;
+align-items:center;
+gap:30px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.guru-box img{
+width:200px;
+border-radius:10px;
+}
+
+.guru-text{
+max-width:500px;
+text-align:left;
+}
+
+/* CTA */
+
+.cta{
+background:#0f766e;
+color:white;
+padding:60px;
+text-align:center;
+}
+
+.cta a{
+background:white;
+color:#0f766e;
+padding:12px 25px;
+border-radius:30px;
+text-decoration:none;
+}
+
+/* FOOTER */
+
+footer{
+background:#0f766e;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+
+<img src="/static/images/logo.png">
+
+<span>Nitya Yog Samiti</span>
+
+</div>
+
+<ul>
+
+    <li><a href="/">Home</a></li>
+    <li><a href="/branches">About Us</a></li>
+    <li><a href="/branches">Branches</a></li>
+    <li><a href="/reviews">Reviews</a></li>
+    
+    <li class="dropdown">
+    
+    <a href="#">Media</a>
+    
+    <ul class="dropdown-menu">
+    
+    <li><a href="/gallery">Photo Gallery</a></li>
+    
+    <li><a href="#">Videos</a></li>
+    
+    <li><a href="#">Events</a></li>
+    <li><a href="#">News</a></li>
+
+    
+    </ul>
+    
+    </li>
+    
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="/developer">Developer</a></li>
+    
+    </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Nitya Yog Samiti</h1>
+
+<p>Healthy Body • Peaceful Mind • Happy Life</p>
+
+<a href="/register">Join Free Yoga Class</a>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="section">
+
+<h2>About Nitya Yog Samiti</h2>
+
+<p>
+Nitya Yog Samiti promotes daily yoga practice for physical health,
+mental peace and spiritual development. Through yoga, pranayama and meditation
+we inspire people to live a balanced and healthy life.
+</p>
+
+</section>
+
+<!-- VISION MISSION OBJECTIVES -->
+
+<section class="section">
+
+<h2>Vision • Mission • Objectives</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Vision</h3>
+
+<p>
+To create a healthy, disciplined and spiritually aware society through
+regular yoga practice and meditation.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Mission</h3>
+
+<p>
+To spread awareness about yoga and encourage people of all ages
+to practice yoga for a healthy and peaceful life.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Objectives</h3>
+
+<p>
+Promote yoga awareness, conduct yoga classes and motivate people
+to adopt a healthy lifestyle.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- OUR GURU -->
+
+<section class="section">
+
+<h2>Our Guru</h2>
+
+<div class="guru-box">
+
+<img src="/static/images/guru.jpeg">
+
+<div class="guru-text">
+
+<h3>Shri Sitaram Ji Sontakke</h3>
+
+<p>
+Shri Sitaram Ji Sontakke is the guiding force behind Nitya Yog Samiti.
+He has dedicated his life to spreading yoga awareness and helping
+people achieve physical health, mental peace and spiritual growth.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- BENEFITS -->
+
+<section class="section">
+
+<h2>Benefits of Yoga</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Better Health</h3>
+<p>Improves flexibility, strength and overall fitness.</p>
+</div>
+
+<div class="card">
+<h3>Stress Relief</h3>
+<p>Meditation and breathing reduce stress and anxiety.</p>
+</div>
+
+<div class="card">
+<h3>Stronger Immunity</h3>
+<p>Regular yoga strengthens the immune system.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- DAILY SCHEDULE -->
+
+<section class="section">
+
+<h2>Daily Yoga Schedule</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Morning Yoga</h3>
+<p>6:00 AM</p>
+</div>
+
+<div class="card">
+<h3>Pranayama</h3>
+<p>6:30 AM</p>
+</div>
+
+<div class="card">
+<h3>Meditation</h3>
+<p>7:00 AM</p>
+</div>
+
+<div class="card">
+<h3>Advanced Yoga</h3>
+<p>7:30 AM</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- JOIN CTA -->
+
+<section class="cta">
+
+<h2>Start Your Yoga Journey Today</h2>
+
+<br>
+
+<a href="/register">Join Yoga Class</a>
+
+</section>
+
+<!-- CONTACT -->
+
+<section class="section" id="contact">
+
+<h2>Contact Us</h2>
+
+<p>📍 Nanded, Maharashtra</p>
+
+<p>📞 9766840731</p>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>© 2026 Nitya Yog Samiti</p>
+
+</footer>
+
+</body>
+
+</html>

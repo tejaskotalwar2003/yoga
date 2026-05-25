@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Us - Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f9f9;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:600;
+font-size:20px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+object-fit:contain;
+background:white;
+padding:5px;
+border-radius:8px;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+nav a.active{
+color:#14b8a6;
+border-bottom:2px solid #14b8a6;
+}
+
+/* dropdown */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+/* join button */
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+/* mobile */
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+.dropdown-menu{
+position:static;
+display:none;
+background:#0f766e;
+box-shadow:none;
+}
+
+.dropdown-menu a{
+color:white;
+}
+
+}
+
+/* HERO */
+
+.hero{
+height:40vh;
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url("https://images.unsplash.com/photo-1506126613408-eca07ce68773");
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+}
+
+.hero h1{
+font-size:50px;
+}
+
+/* SECTION */
+
+.section{
+padding:80px 10%;
+text-align:center;
+}
+
+.section h2{
+color:#0f766e;
+margin-bottom:20px;
+}
+
+.section p{
+max-width:800px;
+margin:auto;
+line-height:1.7;
+}
+
+/* CARDS */
+
+.cards{
+display:flex;
+gap:30px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:30px;
+width:260px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.card i{
+font-size:40px;
+color:#14b8a6;
+margin-bottom:10px;
+}
+
+/* GURU */
+
+.guru-box{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.guru-box img{
+width:230px;
+border-radius:10px;
+}
+
+.guru-text{
+max-width:500px;
+text-align:left;
+}
+
+/* BRANCHES */
+
+.branches{
+display:flex;
+gap:20px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.branch{
+background:white;
+padding:20px 30px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* CTA */
+
+.cta{
+background:#0f766e;
+color:white;
+padding:60px;
+text-align:center;
+}
+
+.cta a{
+background:white;
+color:#0f766e;
+padding:12px 25px;
+border-radius:30px;
+text-decoration:none;
+}
+
+/* FOOTER */
+
+footer{
+background:#0f766e;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+<img src="/static/images/logo.png">
+<span>Nitya Yog Samiti</span>
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/about" class="active">About Us</a></li>
+
+<li><a href="/branches">Branches</a></li>
+
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+
+<ul class="dropdown-menu">
+
+<li><a href="/gallery">Photo Gallery</a></li>
+
+<li><a href="/videos">Videos</a></li>
+
+<li><a href="/events">Events</a></li>
+
+<li><a href="/news">News</a></li>
+
+</ul>
+
+</li>
+
+<li><a href="/committee">Committee</a></li>
+
+<li><a href="/faq">FAQ</a></li>
+
+<li><a href="/developer">Developer</a></li>
+
+<li><a href="/register" class="join-btn">Join Class</a></li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+<h1>About Nitya Yog Samiti</h1>
+</section>
+
+<!-- ABOUT -->
+
+<section class="section">
+
+<h2>Who We Are</h2>
+
+<p>
+Nitya Yog Samiti is a yoga organization dedicated to promoting a healthy,
+disciplined and spiritually balanced lifestyle. Through regular yoga
+practice, pranayama and meditation we help individuals achieve physical
+health, mental peace and spiritual growth.
+</p>
+
+</section>
+
+<!-- VISION MISSION -->
+
+<section class="section">
+
+<h2>Vision & Mission</h2>
+
+<div class="cards">
+
+<div class="card">
+<i class="fas fa-eye"></i>
+<h3>Vision</h3>
+<p>
+To create a healthy and spiritually aware society through yoga and meditation.
+</p>
+</div>
+
+<div class="card">
+<i class="fas fa-bullseye"></i>
+<h3>Mission</h3>
+<p>
+To spread yoga awareness and encourage people of all ages to practice yoga daily.
+</p>
+</div>
+
+<div class="card">
+<i class="fas fa-leaf"></i>
+<h3>Objectives</h3>
+<p>
+Promote yoga awareness and motivate people to adopt a healthy lifestyle.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- GURU -->
+
+<section class="section">
+
+<h2>Our Guru</h2>
+
+<div class="guru-box">
+
+<img src="/static/images/guru.jpeg">
+
+<div class="guru-text">
+
+<h3>Shri Sitaram Ji Sontakke</h3>
+
+<p>
+Shri Sitaram Ji Sontakke is the guiding force behind Nitya Yog Samiti.
+He has dedicated his life to spreading yoga awareness and helping people
+achieve physical health, mental peace and spiritual development.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- BRANCHES -->
+
+<section class="section">
+
+<h2>Our Branches</h2>
+
+<div class="branches">
+
+<div class="branch">Nanded</div>
+<div class="branch">Parbhani</div>
+<div class="branch">Hingoli</div>
+<div class="branch">Latur</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta">
+
+<h2>Start Your Yoga Journey Today</h2>
+
+<br>
+
+<a href="/register">Join Free Yoga Class</a>
+
+</section>
+
+<footer>
+
+© 2026 Nitya Yog Samiti
+
+</footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+</script>
+
+</body>
+
+</html>

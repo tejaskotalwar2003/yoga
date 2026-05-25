@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Core Members - Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f9f9;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:600;
+font-size:20px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+object-fit:contain;
+background:white;
+padding:5px;
+border-radius:8px;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+nav a.active{
+color:#14b8a6;
+border-bottom:2px solid #14b8a6;
+}
+
+/* dropdown */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+/* join button */
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+/* mobile menu */
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+.dropdown-menu{
+position:static;
+display:none;
+background:#0f766e;
+box-shadow:none;
+}
+
+.dropdown-menu a{
+color:white;
+}
+
+}
+
+/* HERO */
+
+.hero{
+height:40vh;
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url("https://images.unsplash.com/photo-1506126613408-eca07ce68773");
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+/* SECTION */
+
+.section{
+padding:80px 10%;
+text-align:center;
+}
+
+.section h2{
+color:#0f766e;
+margin-bottom:40px;
+}
+
+/* MEMBERS GRID */
+
+.members{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
+}
+
+.member-card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.member-card:hover{
+transform:translateY(-5px);
+}
+
+.member-card img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:15px;
+}
+
+.member-card h3{
+color:#0f766e;
+}
+
+.member-card p{
+font-size:14px;
+color:#666;
+}
+
+/* FOOTER */
+
+footer{
+background:#0f766e;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.section{
+padding:60px 6%;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+<img src="/static/images/logo1.png">
+<span>Nitya Yog Samiti</span>
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/aboutus">About Us</a></li>
+
+<li><a href="/branches">Branches</a></li>
+
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+
+<ul class="dropdown-menu">
+
+<li><a href="/gallery">Photo Gallery</a></li>
+<li><a href="/videos">Videos</a></li>
+<li><a href="/events">Events</a></li>
+<li><a href="/news">News</a></li>
+
+</ul>
+
+</li>
+
+<li><a href="/committee" class="active">Committee</a></li>
+
+<li><a href="/faq">FAQ</a></li>
+
+<li><a href="/developer">Developer</a></li>
+
+<li>
+<a href="/register" class="join-btn">Join Class</a>
+</li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>Core Members</h1>
+
+</section>
+
+<!-- MEMBERS -->
+
+<section class="section">
+
+<h2>Our Leadership Team</h2>
+
+<div class="members">
+
+<div class="member-card">
+<img src="/static/images/guru.jpeg">
+<h3>Shri Sitaram Ji Sontakke</h3>
+<p>Founder</p>
+</div>
+
+<div class="member-card">
+<img src="/static/images/blazer.jpg">
+<h3>Tejas Kotalwar</h3>
+<p>President</p>
+</div>
+
+<div class="member-card">
+    <img src="/static/committee/bha2.jpeg">
+    <h3>Bhaiyyasaheb Kamble</h3>
+    <p>Editor</p>
+    </div>
+
+<div class="member-card">
+<img src="/static/images/member3.jpg">
+<h3>Member Name</h3>
+<p>Vice President</p>
+</div>
+
+<div class="member-card">
+<img src="/static/images/member4.jpg">
+<h3>Member Name</h3>
+<p>Secretary</p>
+</div>
+
+<div class="member-card">
+<img src="/static/images/member5.jpg">
+<h3>Member Name</h3>
+<p>Treasurer</p>
+</div>
+
+<div class="member-card">
+<img src="/static/images/member6.jpg">
+<h3>Member Name</h3>
+<p>Coordinator</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 Nitya Yog Samiti
+
+</footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+</script>
+
+</body>
+
+</html>
+```

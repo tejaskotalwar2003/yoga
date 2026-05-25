@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg, #0f766e, #14b8a6);
+}
+
+/* Card */
+
+.login-card{
+background:white;
+padding:40px 30px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+width:320px;
+text-align:center;
+animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+.login-card h2{
+margin-bottom:20px;
+color:#0f766e;
+}
+
+/* Messages */
+
+.error-box{
+color:#b91c1c;
+background:#fee2e2;
+padding:10px;
+border-radius:8px;
+margin-bottom:15px;
+font-size:14px;
+}
+
+.success-box{
+color:#065f46;
+background:#d1fae5;
+padding:10px;
+border-radius:8px;
+margin-bottom:15px;
+font-size:14px;
+}
+
+/* Inputs */
+
+.input-group{
+margin-bottom:18px;
+text-align:left;
+position:relative;
+}
+
+.input-group label{
+font-size:14px;
+color:#555;
+}
+
+.input-group input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+transition:0.3s;
+}
+
+.input-group input:focus{
+border-color:#0f766e;
+box-shadow:0 0 5px rgba(15,118,110,0.4);
+}
+
+/* Eye Icon */
+
+.toggle-password{
+position:absolute;
+right:10px;
+top:35px;
+cursor:pointer;
+font-size:14px;
+color:#555;
+}
+
+/* Button */
+
+button{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#0f766e;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#14b8a6;
+}
+
+/* Footer */
+
+.footer{
+margin-top:15px;
+font-size:13px;
+color:#777;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-card">
+
+  <h2>Admin Login</h2>
+
+  <!-- ✅ Error Message -->
+  {% if error %}
+    <div class="error-box">
+      {{ error }}
+    </div>
+  {% endif %}
+
+  <!-- ✅ Success Message -->
+  {% if success %}
+    <div class="success-box">
+      {{ success }}
+    </div>
+  {% endif %}
+
+  <form action="/login" method="post" onsubmit="showLoading()">
+
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter your email" required />
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required />
+      <span class="toggle-password" onclick="togglePassword()">👁</span>
+    </div>
+
+    <button type="submit" id="loginBtn">Login</button>
+
+  </form>
+
+  <div class="footer">
+    Secure Admin Access 🔐
+  </div>
+
+</div>
+
+<script>
+
+/* 👁 Show/Hide Password */
+function togglePassword(){
+  const password = document.getElementById("password");
+  if(password.type === "password"){
+    password.type = "text";
+  } else {
+    password.type = "password";
+  }
+}
+
+/* 🔄 Loading Button */
+function showLoading(){
+  const btn = document.getElementById("loginBtn");
+  btn.innerText = "Logging in...";
+  btn.disabled = true;
+}
+
+</script>
+
+</body>
+</html>

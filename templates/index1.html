@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nitya Yog Samiti provides free yoga classes in Nanded for physical health and mental peace.">
+
+<meta name="keywords" content="Yoga Nanded, Free Yoga Class, Meditation, Pranayama">
+
+<meta name="author" content="Nitya Yog Samiti">
+<title>Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f9f9;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight: 600;
+font-size: 20px;
+}
+
+.logo img{
+width:60px;
+height: 60px;
+object-fit:contain;
+background: white;
+padding: 5px;
+border-radius: 8px;
+}
+
+.logo span{
+font-size:22px;
+font-weight:600;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+/* DROPDOWN */
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+
+display:none;
+position:absolute;
+top:100%;   /* FIXED */
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+overflow:hidden;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+text-decoration:none;
+display:block;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+.dropdown-menu{
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+}
+
+.dropdown:hover .dropdown-menu{
+opacity:1;
+visibility:visible;
+}
+
+/* MOBILE MENU */
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:70px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+}
+
+/* HERO */
+
+.hero{
+height:90vh;
+background:
+linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+url("https://images.unsplash.com/photo-1506126613408-eca07ce68773");
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+}
+
+.hero h1{
+font-size:60px;
+}
+
+.hero p{
+margin-top:10px;
+font-size:20px;
+}
+
+.hero a{
+margin-top:25px;
+background:#14b8a6;
+padding:12px 30px;
+border-radius:30px;
+color:white;
+text-decoration:none;
+}
+
+/* SECTION */
+
+.section{
+padding:80px 10%;
+text-align:center;
+}
+
+.section h2{
+color:#0f766e;
+margin-bottom:30px;
+}.guru-box{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.guru-box img{
+width:220px;
+border-radius:10px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+.guru-text{
+max-width:500px;
+text-align:left;
+}
+
+
+
+/* ICON CARDS */
+
+.cards{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.card{
+background:white;
+padding:30px;
+width:260px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.card i{
+font-size:40px;
+color:#14b8a6;
+margin-bottom:10px;
+}
+
+/* COUNTERS */
+
+.counter-box{
+display:flex;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+}
+
+.counter{
+font-size:40px;
+color:#0f766e;
+font-weight:bold;
+}
+
+/* GALLERY */
+
+.gallery{
+display:flex;
+gap:15px;
+overflow:auto;
+}
+
+.gallery img{
+width:300px;
+border-radius:10px;
+}
+
+/* TESTIMONIAL */
+
+.testimonial{
+max-width:600px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* WHATSAPP */
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+width:55px;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+color:white;
+font-size:28px;
+text-decoration:none;
+}
+
+/* FOOTER */
+
+footer{
+background:#0f766e;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.social-icons{
+
+margin-top:15px;
+display:flex;
+justify-content:center;
+gap:20px;
+
+}
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+.social-icons a{
+
+font-size:22px;
+color:white;
+transition:0.3s;
+
+}
+
+.social-icons a:hover{
+
+transform:scale(1.2);
+
+}
+
+.fa-instagram:hover{ color:#E1306C; }
+.fa-facebook:hover{ color:#1877F2; }
+.fa-youtube:hover{ color:#FF0000; }
+.fa-whatsapp:hover{ color:#25D366; }
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+
+<img src="/static/images/logo1.png">
+
+<span>Nitya Yog Samiti</span>
+
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/aboutus">About Us</a></li>
+
+<li><a href="/branches">Branches</a></li>
+
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+
+<ul class="dropdown-menu">
+
+<li><a href="/gallery">Photo Gallery</a></li>
+
+<li><a href="/videos">Videos</a></li>
+
+<li><a href="/events">Events</a></li>
+
+<li><a href="/news">News</a></li>
+
+</ul>
+
+</li>
+
+<li><a href="/committee">Committee Members</a></li>
+
+<li><a href="/faq">FAQ</a></li>
+
+<li><a href="/developer">Developer</a></li>
+
+
+<li>
+    <a href="/register" class="join-btn">Join Class</a>
+    </li>
+    
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1 data-aos="fade-up">Nitya Yog Samiti</h1>
+
+<p data-aos="fade-up">Healthy Body • Peaceful Mind • Happy Life</p>
+
+<a href="/register" data-aos="zoom-in">Join Free Yoga Class</a>
+
+</section>
+
+<!-- BENEFITS -->
+
+<section class="section">
+
+<h2 data-aos="fade-up">Benefits of Yoga</h2>
+
+<div class="cards">
+
+<div class="card" data-aos="fade-up">
+<i class="fas fa-spa"></i>
+<h3>Peaceful Mind</h3>
+<p>Meditation improves mental clarity</p>
+</div>
+
+<div class="card" data-aos="fade-up">
+<i class="fas fa-heartbeat"></i>
+<h3>Healthy Body</h3>
+<p>Improves strength and flexibility</p>
+</div>
+
+<div class="card" data-aos="fade-up">
+<i class="fas fa-leaf"></i>
+<h3>Stress Relief</h3>
+<p>Yoga reduces anxiety and stress</p>
+</div>
+
+
+
+</div>
+
+</section>
+
+<section class="section">
+
+    <h2>Our Guru</h2>
+    
+    <div class="guru-box">
+    
+    <img src="/static/images/guru.jpeg" alt="Guru">
+    
+    <div class="guru-text">
+    
+    <h3>Shri Sitaram Ji Sontakke</h3>
+    
+    <p>
+    Shri Sitaram Ji Sontakke is the guiding force behind Nitya Yog Samiti.
+    He has dedicated his life to spreading yoga awareness and helping
+    people achieve physical health, mental peace and spiritual growth.
+    </p>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+
+    <section class="section">
+
+        <h2>Daily Yoga Schedule</h2>
+        
+        <div class="cards">
+        
+        <div class="card">
+        <h3>Morning Yoga</h3>
+        <p>6:00 AM</p>
+        </div>
+        
+        <div class="card">
+        <h3>Pranayama</h3>
+        <p>6:30 AM</p>
+        </div>
+        
+        <div class="card">
+        <h3>Meditation</h3>
+        <p>7:00 AM</p>
+        </div>
+        
+        <div class="card">
+        <h3>Advanced Yoga</h3>
+        <p>7:30 AM</p>
+        </div>
+        
+        </div>
+        
+        </section>
+
+<!-- COUNTERS -->
+
+<section class="section">
+
+<h2>Our Impact</h2>
+
+<div class="counter-box">
+
+<div>
+<div class="counter" data-target="1500">0</div>
+<p>Students</p>
+</div>
+
+<div>
+<div class="counter" data-target="25">0</div>
+<p>Branches</p>
+</div>
+
+<div>
+<div class="counter" data-target="10">0</div>
+<p>Years Experience</p>
+</div>
+
+</div>
+
+</section>
+ <!-- Upcoming events -->
+<section class="section">
+
+    <h2>Upcoming Events</h2>
+    
+    <div class="cards">
+    
+    <div class="card">
+    <h3>International Yoga Day</h3>
+    <p>21 June 2026</p>
+    <p>Special Yoga Camp for all citizens.</p>
+    </div>
+    
+    <div class="card">
+    <h3>Meditation Workshop</h3>
+    <p>15 July 2026</p>
+    <p>Learn deep meditation techniques.</p>
+    </div>
+    
+    <div class="card">
+    <h3>Health Awareness Camp</h3>
+    <p>5 August 2026</p>
+    <p>Free yoga training for beginners.</p>
+    </div>
+    
+    
+    </div>
+    
+    </section>
+
+<!-- GALLERY -->
+
+<section class="section">
+
+<h2>Yoga Gallery</h2>
+
+<div class="gallery">
+
+<img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e">
+
+<img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3">
+
+<img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0">
+
+<img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0">
+</div>
+
+</section>
+
+<!-- TESTIMONIAL -->
+
+<section class="section">
+
+<h2>What People Say</h2>
+
+<div class="testimonial">
+
+<p>"Yoga classes here changed my life. I feel healthier and more peaceful."</p>
+
+<b>- Yoga Student</b>
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section class="section" id="contact">
+
+<h2>Contact Us</h2>
+
+<p>Nanded, Maharashtra</p>
+
+<p>📞 9766840731</p>
+
+</section>
+
+<!-- WHATSAPP BUTTON -->
+
+<a class="whatsapp" href="https://wa.me/919766840731">
+
+<i class="fab fa-whatsapp"></i>
+
+</a>
+
+<footer>
+
+© 2026 Nitya Yog Samiti
+<div class="social-icons">
+
+    <a href="https://instagram.com" target="_blank">
+    <i class="fab fa-instagram"></i>
+    </a>
+    
+    <a href="https://facebook.com" target="_blank">
+    <i class="fab fa-facebook"></i>
+    </a>
+    
+    <a href="https://youtube.com" target="_blank">
+    <i class="fab fa-youtube"></i>
+    </a>
+    
+    <a href="https://wa.me/919999999999" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    </div>
+
+    <p style="margin-top:10px; font-size:13px;">
+        <a href="/login-page" style="color:#cbd5f5; text-decoration:none;">
+          Admin Login
+        </a>
+      </p>
+
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+
+AOS.init();
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+const counters=document.querySelectorAll('.counter')
+
+counters.forEach(counter=>{
+
+const update=()=>{
+
+const target=+counter.getAttribute('data-target')
+
+const count=+counter.innerText
+
+const inc=target/50
+
+if(count<target){
+
+counter.innerText=Math.ceil(count+inc)
+
+setTimeout(update,30)
+
+}else{
+
+counter.innerText=target
+
+}
+
+}
+
+update()
+
+})
+
+</script>
+
+</body>
+</html>

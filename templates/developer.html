@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Developer - Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f9f9;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:600;
+font-size:20px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+object-fit:contain;
+background:white;
+padding:5px;
+border-radius:8px;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+nav a.active{
+color:#14b8a6;
+border-bottom:2px solid #14b8a6;
+}
+
+/* dropdown */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+.show-dropdown{
+display:block !important;
+}
+
+/* join button */
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+/* MOBILE MENU */
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+.dropdown-menu{
+position:static;
+display:none;
+background:#0f766e;
+box-shadow:none;
+}
+
+.dropdown-menu a{
+color:white;
+}
+
+}
+
+/* SECTION TITLE */
+
+.dev-title{
+text-align:center;
+color:#0f766e;
+font-size:36px;
+margin-top:60px;
+}
+
+.dev-subtitle{
+text-align:center;
+color:#666;
+margin-bottom:40px;
+}
+
+/* DEVELOPER SECTION */
+
+.dev-section{
+padding:0 10% 80px;
+display:flex;
+justify-content:center;
+}
+
+/* CARD */
+
+.dev-card{
+
+background:white;
+
+display:flex;
+gap:40px;
+
+padding:40px;
+
+border-radius:18px;
+
+border-top:5px solid #14b8a6;
+
+box-shadow:0 12px 35px rgba(0,0,0,0.08);
+
+max-width:900px;
+
+transition:0.3s;
+
+}
+
+.dev-card:hover{
+
+transform:translateY(-8px);
+box-shadow:0 20px 45px rgba(0,0,0,0.15);
+
+}
+
+/* LEFT */
+
+.dev-left{
+text-align:center;
+width:250px;
+}
+
+.dev-left img{
+
+width:150px;
+height:150px;
+
+border-radius:50%;
+object-fit:cover;
+
+border:5px solid #14b8a6;
+
+margin-bottom:15px;
+
+}
+
+.dev-left h2{
+color:#0f766e;
+margin-bottom:5px;
+}
+
+.role{
+color:#666;
+}
+
+/* RIGHT */
+
+.dev-right{
+flex:1;
+}
+
+.desc{
+font-size:15px;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+/* TECH BADGES */
+
+.tech-badges{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:15px 0 25px 0;
+}
+
+.tech-badges span{
+
+background:#e6f7f6;
+color:#0f766e;
+
+padding:7px 16px;
+
+border-radius:25px;
+
+font-size:13px;
+font-weight:500;
+
+transition:0.3s;
+
+}
+
+.tech-badges span:hover{
+
+background:#14b8a6;
+color:white;
+
+}
+
+/* BUTTON */
+
+.contact-btn{
+
+background:#0f766e;
+color:white;
+
+padding:10px 20px;
+
+border-radius:8px;
+
+text-decoration:none;
+
+display:inline-block;
+
+}
+
+.contact-btn:hover{
+background:#14b8a6;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.dev-section{
+padding:0 6% 60px;
+}
+
+.dev-card{
+flex-direction:column;
+text-align:center;
+}
+
+.dev-left{
+width:100%;
+}
+
+.dev-title{
+font-size:28px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<img src="/static/images/logo1.png">
+
+<span>Nitya Yog Samiti</span>
+
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/aboutus">About Us</a></li>
+
+<li><a href="/branches">Branches</a></li>
+
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+
+<ul class="dropdown-menu">
+
+<li><a href="/gallery">Photo Gallery</a></li>
+<li><a href="/videos">Videos</a></li>
+<li><a href="/events">Events</a></li>
+<li><a href="/news">News</a></li>
+
+</ul>
+
+</li>
+
+<li><a href="/committee">Committee</a></li>
+
+<li><a href="/faq">FAQ</a></li>
+
+<li><a href="/developer" class="active">Developer</a></li>
+
+<li>
+<a href="/register" class="join-btn">Join Class</a>
+</li>
+
+</ul>
+
+</nav>
+
+<h1 class="dev-title">Website Developer</h1>
+
+<p class="dev-subtitle">
+Meet the developer behind the Nitya Yog Samiti platform
+</p>
+
+<section class="dev-section">
+
+<div class="dev-card">
+
+<div class="dev-left">
+
+<img src="/static/images/blazer.jpg">
+
+<h2>Tejas Kotalwar</h2>
+
+<p class="role">Web Developer</p>
+
+</div>
+
+<div class="dev-right">
+
+<p class="desc">
+
+Developer of the Nitya Yog Samiti Website.  
+This platform allows users to explore yoga branches,
+view gallery photos, read reviews and join yoga classes easily.
+
+</p>
+
+<h3>Technologies Used</h3>
+
+<div class="tech-badges">
+
+<span>HTML</span>
+<span>CSS</span>
+<span>JavaScript</span>
+<span>Python</span>
+<span>FastAPI</span>
+<span>PostgreSQL</span>
+
+</div>
+
+<a href="mailto:tejaskotalwar08@gmail.com" class="contact-btn">
+
+Contact Developer
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+document.querySelectorAll(".dropdown > a").forEach(item=>{
+item.addEventListener("click", function(e){
+
+if(window.innerWidth < 768){
+e.preventDefault()
+this.nextElementSibling.classList.toggle("show-dropdown")
+}
+
+})
+})
+
+</script>
+
+</body>
+
+</html>
+```

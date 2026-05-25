@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Gallery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+display:flex;
+background:#eef2f7;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:230px;
+background:#0f766e;
+height:100vh;
+color:white;
+padding:25px;
+position:fixed;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+margin-bottom:40px;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#14b8a6;
+}
+
+.logout{
+margin-top:auto;
+background:#dc2626;
+text-align:center;
+}
+
+.logout:hover{
+background:#b91c1c;
+}
+
+/* MAIN */
+
+.main{
+margin-left:230px;
+width:100%;
+padding:30px;
+}
+
+/* HEADER */
+
+.header{
+background:#0f766e;
+color:white;
+padding:16px 20px;
+border-radius:10px;
+margin-bottom:25px;
+}
+
+.header h1{
+font-size:20px;
+}
+
+/* UPLOAD BOX */
+
+.upload-box{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+margin-bottom:30px;
+}
+
+.upload-box form{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.upload-box input{
+padding:8px;
+}
+
+.upload-btn{
+background:#0f766e;
+color:white;
+padding:10px 18px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.upload-btn:hover{
+background:#14b8a6;
+}
+
+/* GALLERY GRID */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+padding:12px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+}
+
+/* IMAGE */
+
+.card img{
+width:100%;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* DELETE BUTTON */
+
+.delete{
+margin-top:10px;
+padding:7px 14px;
+border:none;
+background:#dc2626;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.delete:hover{
+background:#b91c1c;
+}
+
+/* IMAGE POPUP */
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.popup img{
+max-width:80%;
+max-height:80%;
+border-radius:10px;
+}
+
+.popup span{
+position:absolute;
+top:25px;
+right:40px;
+font-size:35px;
+color:white;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Nitya Yog</h2>
+
+<a href="/admin_dashboard">Dashboard</a>
+<a href="/admin/users">Registrations</a>
+<a href="/admin/reviews">Reviews</a>
+<a href="/admin/branches">Branches</a>
+<a href="/admin/gallery">Gallery</a>
+<a href="/admin/events">Events</a>
+
+<a class="logout" href="/admin/logout">Logout</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+<h1>Gallery Management</h1>
+</div>
+
+<!-- UPLOAD BOX -->
+
+<div class="upload-box">
+
+<form action="/admin/upload_photo" method="post" enctype="multipart/form-data">
+
+<input type="file" name="photo" required>
+
+<button type="submit" class="upload-btn">
+Upload Photo
+</button>
+
+</form>
+
+</div>
+
+<!-- GALLERY -->
+
+<div class="gallery">
+
+{% for photo in photos %}
+
+<div class="card">
+
+<img src="/static/uploads/{{photo.image}}" onclick="showImage(this.src)">
+
+<form action="/admin/delete_photo/{{photo.id}}" method="post">
+
+<button class="delete">
+Delete
+</button>
+
+</form>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<!-- IMAGE POPUP -->
+
+<div class="popup" id="imagePopup" onclick="closeImage()">
+
+<span>&times;</span>
+
+<img id="popupImg">
+
+</div>
+
+<script>
+
+function showImage(src){
+
+document.getElementById("popupImg").src=src
+document.getElementById("imagePopup").style.display="flex"
+
+}
+
+function closeImage(){
+
+document.getElementById("imagePopup").style.display="none"
+
+}
+
+</script>
+
+</body>
+
+</html>

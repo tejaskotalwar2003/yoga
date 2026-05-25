@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nitya Yog Samiti - Branches</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f3f8f8;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:600;
+font-size:20px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+object-fit:contain;
+background:white;
+padding:5px;
+border-radius:8px;
+}
+
+.logo span{
+font-size:22px;
+font-weight:600;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+/* DROPDOWN */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+overflow:hidden;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+display:block;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+/* MOBILE MENU */
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:70px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+}
+
+/* JOIN BUTTON */
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+/* HERO */
+
+.page-title{
+background:
+linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
+url("https://images.unsplash.com/photo-1506126613408-eca07ce68773");
+
+background-size:cover;
+background-position:center;
+
+text-align:center;
+color:white;
+padding:80px 20px;
+}
+
+.page-title h1{
+font-size:42px;
+}
+
+.page-title p{
+font-size:18px;
+}
+
+/* CONTAINER */
+
+.container{
+padding:70px 10%;
+}
+
+/* GRID */
+
+.branches{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+border-radius:12px;
+padding:25px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.card h3{
+color:#0f766e;
+margin-bottom:10px;
+}
+
+.info{
+margin:8px 0;
+color:#555;
+font-size:15px;
+}
+
+.info i{
+color:#0f766e;
+margin-right:8px;
+}
+
+.btn{
+display:inline-block;
+margin-top:15px;
+background:#0f766e;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#14b8a6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+<img src="/static/images/logo1.png">
+<span>Nitya Yog Samiti</span>
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+<li><a href="/aboutus">About Us</a></li>
+<li><a href="/branches">Branches</a></li>
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="/gallery">Photo Gallery</a></li>
+<li><a href="/videos">Videos</a></li>
+<li><a href="/events">Events</a></li>
+<li><a href="/news">News</a></li>
+</ul>
+</li>
+
+<li><a href="/committee">Committee Members</a></li>
+<li><a href="/faq">FAQ</a></li>
+<li><a href="/developer">Developer</a></li>
+
+<li><a href="/register" class="join-btn">Join Class</a></li>
+
+</ul>
+
+</nav>
+
+<!-- TITLE -->
+
+<div class="page-title">
+<h1>Our Branches in Nanded</h1>
+<p>Find the nearest Nitya Yog Samiti branch</p>
+</div>
+
+<!-- BRANCHES -->
+
+<div class="container">
+
+<div class="branches">
+
+{% for branch in branches %}
+
+<div class="card">
+
+<h3>{{branch.name}}</h3>
+
+<p class="info">
+<i class="fas fa-map-marker-alt"></i> {{branch.address}}
+</p>
+
+<p class="info">
+<i class="fas fa-clock"></i> Batch: {{branch.batch_time}}
+</p>
+
+<p class="info">
+<i class="fas fa-user"></i> Trainer: {{branch.trainer}}
+</p>
+
+<p class="info">
+<i class="fas fa-phone"></i> {{branch.contact}}
+</p>
+
+<a href="{{branch.map_link}}" target="_blank" class="btn">
+Get Directions
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+</script>
+
+</body>
+</html>

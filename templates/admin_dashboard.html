@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+display:flex;
+background:#f3f8f8;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:230px;
+height:100vh;
+background:#0f766e;
+color:white;
+padding:25px;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+margin-bottom:40px;
+font-weight:600;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#14b8a6;
+}
+
+.sidebar .logout{
+margin-top:auto;
+background:#dc2626;
+text-align:center;
+}
+
+.sidebar .logout:hover{
+background:#b91c1c;
+}
+
+/* Main */
+
+.main{
+flex:1;
+padding:30px;
+}
+
+/* Header */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+background:white;
+padding:15px 20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.header h1{
+font-size:22px;
+}
+
+.header p{
+color:#555;
+}
+
+/* Cards */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h2{
+font-size:32px;
+color:#0f766e;
+margin-bottom:10px;
+}
+
+.card p{
+color:#666;
+font-size:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>Admin Panel</h2>
+
+<a href="/admin_dashboard">Dashboard</a>
+<a href="/admin/users">Registrations</a>
+<a href="/admin/reviews">Reviews</a>
+<a href="/admin/branches">Branches</a>
+<a href="/admin/gallery">Gallery</a>
+<a href="/admin/events">Events</a>
+<a href="/admin/profile">Admin Profile</a>
+
+<a class="logout"  href="/admin/logout">Logout</a>
+
+</div>
+
+<!-- Main Content -->
+
+<div class="main">
+
+<div class="header">
+
+<h1>Dashboard</h1>
+
+<p>Welcome Admin | {{today}}</p>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h2>{{users}}</h2>
+<p>Total Registrations</p>
+</div>
+
+<div class="card">
+<h2>{{reviews}}</h2>
+<p>Total Reviews</p>
+</div>
+
+<div class="card">
+<h2>{{branches}}</h2>
+<p>Total Branches</p>
+</div>
+
+<div class="card">
+<h2>{{photos}}</h2>
+<p>Gallery Photos</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

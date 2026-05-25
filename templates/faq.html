@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FAQ - Nitya Yog Samiti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f9f9;
+}
+
+/* NAVBAR */
+
+nav{
+background:#0f766e;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 8%;
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:600;
+font-size:20px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+object-fit:contain;
+background:white;
+padding:5px;
+border-radius:8px;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+}
+
+nav a.active{
+color:#14b8a6;
+border-bottom:2px solid #14b8a6;
+}
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+background:white;
+list-style:none;
+min-width:170px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+border-radius:6px;
+padding:5px 0;
+}
+
+.dropdown-menu li{
+padding:10px 15px;
+}
+
+.dropdown-menu a{
+color:#333;
+}
+
+.dropdown-menu li:hover{
+background:#f3f4f6;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+.join-btn{
+background:#14b8a6;
+padding:8px 18px;
+border-radius:20px;
+}
+
+.menu-btn{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+nav ul{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+display:none;
+padding:20px;
+}
+
+nav ul.show{
+display:flex;
+}
+
+.menu-btn{
+display:block;
+}
+
+.dropdown-menu{
+position:static;
+display:none;
+background:#0f766e;
+box-shadow:none;
+}
+
+.dropdown-menu a{
+color:white;
+}
+
+}
+
+/* HERO */
+
+.hero{
+height:35vh;
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url("https://images.unsplash.com/photo-1506126613408-eca07ce68773");
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+}
+
+.hero h1{
+font-size:45px;
+}
+
+/* FAQ GRID */
+
+.faq-container{
+padding:80px 8%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+}
+
+.section-title{
+color:#0f766e;
+margin-bottom:25px;
+}
+
+/* FAQ */
+
+.faq{
+background:white;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+margin-bottom:12px;
+overflow:hidden;
+}
+
+.faq-question{
+padding:16px 20px;
+cursor:pointer;
+font-weight:600;
+display:flex;
+justify-content:space-between;
+}
+
+.faq-question:hover{
+background:#f3f4f6;
+}
+
+.faq-answer{
+max-height:0;
+overflow:hidden;
+transition:0.3s;
+padding:0 20px;
+color:#555;
+}
+
+.faq.active .faq-answer{
+max-height:200px;
+padding:12px 20px;
+}
+
+.faq-question span{
+transition:0.3s;
+}
+
+.faq.active span{
+transform:rotate(45deg);
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+.faq-container{
+grid-template-columns:1fr;
+padding:60px 6%;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+}
+
+/* FOOTER */
+
+footer{
+background:#0f766e;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+
+<img src="/static/images/logo1.png">
+
+<span>Nitya Yog Samiti</span>
+
+</div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+<li><a href="/aboutus">About Us</a></li>
+<li><a href="/branches">Branches</a></li>
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="/gallery">Photo Gallery</a></li>
+<li><a href="/videos">Videos</a></li>
+<li><a href="/events">Events</a></li>
+<li><a href="/news">News</a></li>
+</ul>
+</li>
+
+<li><a href="/committee">Committee</a></li>
+<li><a href="/faq" class="active">FAQ</a></li>
+
+<li>
+<a href="/register" class="join-btn">Join Class</a>
+</li>
+
+</ul>
+
+</nav>
+
+<section class="hero">
+<h1>Frequently Asked Questions</h1>
+</section>
+
+<div class="faq-container">
+
+<!-- LEFT SIDE -->
+
+<div>
+
+<h2 class="section-title">General Questions</h2>
+
+<div class="faq"><div class="faq-question">Who can join yoga classes?<span>+</span></div><div class="faq-answer"><p>Anyone including students, professionals and senior citizens can join.</p></div></div>
+
+<div class="faq"><div class="faq-question">Do beginners need prior yoga experience?<span>+</span></div><div class="faq-answer"><p>No experience is required. Beginners are guided step by step.</p></div></div>
+
+<div class="faq"><div class="faq-question">What is the timing of yoga sessions?<span>+</span></div><div class="faq-answer"><p>Morning sessions usually start at 5:00 AM followed by pranayama and meditation.</p></div></div>
+
+<div class="faq"><div class="faq-question">Is there any fee for yoga classes?<span>+</span></div><div class="faq-answer"><p>Most sessions are community service based. Some workshops may have minimal fees.</p></div></div>
+
+<div class="faq"><div class="faq-question">What should I bring to yoga class?<span>+</span></div><div class="faq-answer"><p>A yoga mat, comfortable clothes and a water bottle.</p></div></div>
+
+<div class="faq"><div class="faq-question">Can senior citizens participate?<span>+</span></div><div class="faq-answer"><p>Yes, yoga is suitable for people of all ages.</p></div></div>
+
+<div class="faq"><div class="faq-question">How can I register for yoga classes?<span>+</span></div><div class="faq-answer"><p>You can register through our website or visit the nearest branch.</p></div></div>
+
+<div class="faq"><div class="faq-question">Are yoga classes conducted every day?<span>+</span></div><div class="faq-answer"><p>Yes, most branches conduct yoga sessions daily.</p></div></div>
+
+<div class="faq"><div class="faq-question">Can students join yoga classes?<span>+</span></div><div class="faq-answer"><p>Yes, students are encouraged to practice yoga for better focus and health.</p></div></div>
+
+<div class="faq"><div class="faq-question">How can I contact Nitya Yog Samiti?<span>+</span></div><div class="faq-answer"><p>You can contact us through phone or the contact page.</p></div></div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div>
+
+<h2 class="section-title">Health & Practice Questions</h2>
+
+<div class="faq"><div class="faq-question">What are the benefits of yoga?<span>+</span></div><div class="faq-answer"><p>Yoga improves flexibility, strength, mental peace and overall health.</p></div></div>
+
+<div class="faq"><div class="faq-question">Can yoga help reduce stress?<span>+</span></div><div class="faq-answer"><p>Yes, yoga and meditation help reduce stress and anxiety.</p></div></div>
+
+<div class="faq"><div class="faq-question">Do you provide yoga training for beginners?<span>+</span></div><div class="faq-answer"><p>Yes, beginner friendly sessions are conducted.</p></div></div>
+
+<div class="faq"><div class="faq-question">Are yoga instructors experienced?<span>+</span></div><div class="faq-answer"><p>Yes, experienced instructors guide the sessions.</p></div></div>
+
+<div class="faq"><div class="faq-question">Do you organize yoga events?<span>+</span></div><div class="faq-answer"><p>Yes, yoga camps and International Yoga Day events are organized.</p></div></div>
+
+<div class="faq"><div class="faq-question">Can yoga help in managing health conditions?<span>+</span></div><div class="faq-answer"><p>Yoga can support management of stress, anxiety and lifestyle diseases.</p></div></div>
+
+<div class="faq"><div class="faq-question">Is yoga safe for people with medical issues?<span>+</span></div><div class="faq-answer"><p>People with serious medical conditions should consult a doctor first.</p></div></div>
+
+<div class="faq"><div class="faq-question">How long does it take to see results?<span>+</span></div><div class="faq-answer"><p>Many people notice improvements within a few weeks of regular practice.</p></div></div>
+
+<div class="faq"><div class="faq-question">What is the difference between yoga and meditation?<span>+</span></div><div class="faq-answer"><p>Yoga includes physical postures while meditation focuses on calming the mind.</p></div></div>
+
+<div class="faq"><div class="faq-question">Can yoga improve mental health?<span>+</span></div><div class="faq-answer"><p>Yes, yoga helps improve emotional balance and concentration.</p></div></div>
+
+</div>
+
+</div>
+
+<footer>
+
+© 2026 Nitya Yog Samiti
+
+</footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("show")
+}
+
+const faqs=document.querySelectorAll(".faq")
+
+faqs.forEach(faq=>{
+faq.addEventListener("click",()=>{
+
+faqs.forEach(item=>{
+if(item!==faq){
+item.classList.remove("active")
+}
+})
+
+faq.classList.toggle("active")
+
+})
+})
+
+</script>
+
+</body>
+</html>
+```

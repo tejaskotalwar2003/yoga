@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+display:flex;
+background:#f3f8f8;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:230px;
+height:100vh;
+background:#0f766e;
+color:white;
+padding:25px;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+margin-bottom:40px;
+font-weight:600;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#14b8a6;
+}
+
+.sidebar .logout{
+margin-top:auto;
+background:#dc2626;
+text-align:center;
+}
+
+.sidebar .logout:hover{
+background:#b91c1c;
+}
+
+/* Main */
+
+.main{
+flex:1;
+padding:30px;
+}
+
+/* Header */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+background:white;
+padding:15px 20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.header h1{
+font-size:22px;
+}
+
+.header p{
+color:#555;
+}
+
+/* Table Card */
+
+.table-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+margin-bottom:25px;
+}
+
+.table-card h3{
+margin-bottom:15px;
+color:#0f766e;
+}
+
+/* Table */
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th, td{
+padding:12px;
+text-align:center;
+}
+
+thead{
+background:#0f766e;
+color:white;
+}
+
+tr{
+border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+background:#f1f1f1;
+}
+
+/* Buttons */
+
+.btn{
+padding:6px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+}
+
+.approve{
+background:#16a34a;
+color:white;
+}
+
+.reject{
+background:#dc2626;
+color:white;
+}
+
+.empty{
+text-align:center;
+padding:15px;
+color:gray;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>Admin Panel</h2>
+
+<a href="/admin_dashboard">Dashboard</a>
+<a href="/admin/users">Registrations</a>
+<a href="/admin/reviews">Reviews</a>
+<a href="/admin/branches">Branches</a>
+<a href="/admin/gallery">Gallery</a>
+<a href="/admin/approval">Admin Approval</a>
+<a href="/admin/profile">Admin Profile</a>
+
+<a class="logout" href="/logout">Logout</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="header">
+<h1>Admin Management</h1>
+<p>Manage all admins</p>
+</div>
+
+<!-- Pending -->
+
+<div class="table-card">
+<h3>Pending Admin Approvals</h3>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="pendingTable"></tbody>
+</table>
+
+</div>
+
+<!-- Approved -->
+
+<div class="table-card">
+<h3>Approved Admins</h3>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+</tr>
+</thead>
+<tbody id="approvedTable"></tbody>
+</table>
+
+</div>
+
+</div>
+
+<script>
+async function loadAdmins() {
+  const res = await fetch("/pending-admins", {
+    credentials: "include"
+  });
+
+  const data = await res.json();
+
+  const pendingTable = document.getElementById("pendingTable");
+  const approvedTable = document.getElementById("approvedTable");
+
+  pendingTable.innerHTML = "";
+  approvedTable.innerHTML = "";
+
+  // Pending
+  if (data.pending.length === 0) {
+    pendingTable.innerHTML = `<tr><td colspan="3" class="empty">No pending admins</td></tr>`;
+  } else {
+    data.pending.forEach(admin => {
+      pendingTable.innerHTML += `
+        <tr>
+          <td>${admin.name}</td>
+          <td>${admin.email}</td>
+          <td>
+            <button class="btn approve" onclick="approve(${admin.id})">Approve</button>
+            <button class="btn reject" onclick="reject(${admin.id})">Reject</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  // Approved
+  if (data.approved.length === 0) {
+    approvedTable.innerHTML = `<tr><td colspan="2" class="empty">No approved admins</td></tr>`;
+  } else {
+    data.approved.forEach(admin => {
+      approvedTable.innerHTML += `
+        <tr>
+          <td>${admin.name}</td>
+          <td>${admin.email}</td>
+        </tr>
+      `;
+    });
+  }
+}
+
+async function approve(id) {
+  await fetch(`/approve-admin/${id}`, {
+    method: "POST",
+    credentials: "include"
+  });
+  loadAdmins();
+}
+
+async function reject(id) {
+  await fetch(`/reject-admin/${id}`, {
+    method: "DELETE",
+    credentials: "include"
+  });
+  loadAdmins();
+}
+
+loadAdmins();
+</script>
+
+</body>
+</html>
