@@ -400,16 +400,22 @@ def login_page(request: Request):
         request=request,
         name="login.html"
     )
-
-# Pending Admins
+# =========================
+# PENDING ADMINS
+# =========================
 @app.get("/pending-admins")
 def pending_admins(user=Depends(verify_token)):
+
     if user["role"] != "super_admin":
-        raise HTTPException(status_code=403, detail="Access denied")
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied"
+        )
 
     db = SessionLocal()
 
     try:
+
         admins = db.query(Admin).filter(
             Admin.role == "admin",
             Admin.is_approved == False
@@ -421,28 +427,55 @@ def pending_admins(user=Depends(verify_token)):
         db.close()
 
 
+# =========================
+# APPROVAL PAGE
+# =========================
 @app.get("/admin/approval", response_class=HTMLResponse)
-def approval_page(request: Request, user=Depends(verify_token)):
+def approval_page(
+    request: Request,
+    user=Depends(verify_token)
+):
+
     if user["role"] != "super_admin":
-        raise HTTPException(status_code=403, detail="Access denied")
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied"
+        )
 
-    return templates.TemplateResponse("admin_approval.html", {"request": request})
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_approval.html"
+    )
 
-#Approve admins
+
+# =========================
+# APPROVE ADMIN
+# =========================
 @app.post("/approve-admin/{admin_id}")
-def approve_admin(admin_id: int, user=Depends(verify_token)):
+def approve_admin(
+    admin_id: int,
+    user=Depends(verify_token)
+):
+
     if user["role"] != "super_admin":
-        raise HTTPException(status_code=403, detail="Access denied")
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied"
+        )
 
     db = SessionLocal()
 
     try:
-        admin = db.query(Admin).filter(Admin.id == admin_id).first()
+
+        admin = db.query(Admin).filter(
+            Admin.id == admin_id
+        ).first()
 
         if not admin:
             return {"error": "Admin not found"}
 
         admin.is_approved = True
+
         db.commit()
 
         return {"message": "Approved"}
@@ -451,78 +484,91 @@ def approve_admin(admin_id: int, user=Depends(verify_token)):
         db.close()
 
 
-# def create_super_admin():
-#     db = SessionLocal()
-
-#     try:
-#         existing = db.query(Admin).filter(Admin.email == "super@admin.com").first()
-
-#         if not existing:
-#             admin = Admin(
-#                 name="Tejas Kotalwar",
-#                 email="tejaskotalwar07@gmail.com",
-#                 password=hash_password("Tejas@2003+-"),
-#                 role="super_admin",
-#                 is_approved=True
-#             )
-#             db.add(admin)
-#             db.commit()
-
-#     finally:
-#         db.close()
-
-# create_super_admin()
-
-
+# =========================
+# LOGOUT
+# =========================
 @app.get("/logout")
 def logout():
-    response = RedirectResponse(url="/login-page", status_code=303)
+
+    response = RedirectResponse(
+        url="/login-page",
+        status_code=303
+    )
+
     response.delete_cookie("token")
+
     return response
 
-# ADMIN PANEL STARTS HERE
 
+# =========================
 # SHOW BRANCHES
+# =========================
 @app.get("/branches", response_class=HTMLResponse)
 def branches(request: Request):
 
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT * FROM branches"))
+
+        result = conn.execute(
+            text("SELECT * FROM branches")
+        )
+
         data = result.fetchall()
 
     return templates.TemplateResponse(
-        "branches.html",
-        {"request": request, "branches": data}
+        request=request,
+        name="branches.html",
+        context={
+            "request": request,
+            "branches": data
+        }
     )
 
-#reviews
+
+# =========================
+# REVIEWS PAGE
+# =========================
 @app.get("/reviews", response_class=HTMLResponse)
 def reviews_page(request: Request):
 
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT * FROM reviews ORDER BY id DESC"))
+
+        result = conn.execute(
+            text("SELECT * FROM reviews ORDER BY id DESC")
+        )
+
         reviews = result.fetchall()
 
     return templates.TemplateResponse(
-        "reviews.html",
-        {"request": request, "reviews": reviews}
+        request=request,
+        name="reviews.html",
+        context={
+            "request": request,
+            "reviews": reviews
+        }
     )
 
-#submit review
+
+# =========================
+# SUBMIT REVIEW
+# =========================
 @app.post("/submit_review")
 async def submit_review(
+
     name: str = Form(...),
     city: str = Form(...),
     rating: int = Form(...),
     health_improvement: str = Form(...),
     message: str = Form(...),
     photo: UploadFile = File(None)
+
 ):
 
     photo_name = None
 
     if photo:
+
         photo_name = photo.filename
+
         path = f"static/reviews/{photo_name}"
 
         with open(path, "wb") as buffer:
@@ -533,8 +579,24 @@ async def submit_review(
         conn.execute(
             text("""
             INSERT INTO reviews
-            (name,city,rating,health_improvement,message,photo)
-            VALUES(:n,:c,:r,:h,:m,:p)
+            (
+                name,
+                city,
+                rating,
+                health_improvement,
+                message,
+                photo
+            )
+
+            VALUES
+            (
+                :n,
+                :c,
+                :r,
+                :h,
+                :m,
+                :p
+            )
             """),
             {
                 "n": name,
@@ -548,7 +610,9 @@ async def submit_review(
 
         conn.commit()
 
-    return {"message": "Review Submitted Successfully"}
+    return {
+        "message": "Review Submitted Successfully"
+    }
 
 #admin update review
 @app.post("/admin/update_review/{id}")
