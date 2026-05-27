@@ -185,7 +185,12 @@ def hash_password(password: str):
 
 
 def verify_password(plain: str, hashed: str):
-    return pwd_context.verify(plain, hashed)def create_super_admin():
+    return pwd_context.verify(plain, hashed)
+    
+# =========================
+# CREATE SUPER ADMIN
+# =========================
+def create_super_admin():
 
     db = SessionLocal()
 
@@ -214,9 +219,6 @@ def verify_password(plain: str, hashed: str):
 
 
 create_super_admin()
-
-
-
 
 # =========================
 # REGISTER ADMIN
