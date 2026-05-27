@@ -28,45 +28,75 @@ templates = Jinja2Templates(directory="templates")
 
 app.mount("/static", StaticFiles(directory="static"), name ="static")
 
-
-#donate 
+# donate
 @app.get("/donate", response_class=HTMLResponse)
 def donate_us(request: Request):
-    return templates.TemplateResponse("donate.html", {"request": request})
+
+    return templates.TemplateResponse(
+        request=request,
+        name="donate.html"
+    )
+
 
 # HOME PAGE
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
-    return templates.TemplateResponse("index1.html", {"request": request})
 
-
-@app.get("/developer", response_class=HTMLResponse)
-def home(request: Request):
-    return templates.TemplateResponse("developer.html", {"request": request})
-
-#About Us
-@app.get("/aboutus", response_class=HTMLResponse)
-def home(request: Request):
-    return templates.TemplateResponse("aboutus.html", {"request": request})
-
-#committee Us
-@app.get("/committee", response_class=HTMLResponse)
-def home(request: Request):
-    return templates.TemplateResponse("committee.html", {"request": request})
-
-#FAQ
-@app.get("/faq")
-def faq(request: Request):
     return templates.TemplateResponse(
-        "faq.html",
-        {"request": request}
+        request=request,
+        name="index1.html"
     )
 
 
-#Registration
+# Developer
+@app.get("/developer", response_class=HTMLResponse)
+def developer(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="developer.html"
+    )
+
+
+# About Us
+@app.get("/aboutus", response_class=HTMLResponse)
+def aboutus(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="aboutus.html"
+    )
+
+
+# Committee
+@app.get("/committee", response_class=HTMLResponse)
+def committee(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="committee.html"
+    )
+
+
+# FAQ
+@app.get("/faq", response_class=HTMLResponse)
+def faq(request: Request):
+
+    return templates.TemplateResponse(
+        request=request,
+        name="faq.html"
+    )
+
+
+# Registration
 @app.get("/register", response_class=HTMLResponse)
 def register_page(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+
+    return templates.TemplateResponse(
+        request=request,
+        name="register.html"
+    )
+
 
 @app.post("/submit_registration")
 def submit_registration(
@@ -76,43 +106,68 @@ def submit_registration(
     address: str = Form(...),
     district: str = Form(...),
     state: str = Form(...),
-    health_problem: str = Form(None)):
+    health_problem: str = Form(None)
+):
 
     if len(mobile.strip()) != 10:
-        return {"error":"Mobile number must be 10 digits"}
+        return {"error": "Mobile number must be 10 digits"}
 
     with engine.connect() as conn:
 
         conn.execute(
-            text("""INSERT INTO users(name,age,mobile,address,district,state,health_problem)
-            VALUES (:n,:a,:m,:ad,:d,:s,:h)"""),
+            text("""
+            INSERT INTO users
+            (
+                name,
+                age,
+                mobile,
+                address,
+                district,
+                state,
+                health_problem
+            )
+
+            VALUES
+            (
+                :n,
+                :a,
+                :m,
+                :ad,
+                :d,
+                :s,
+                :h
+            )
+            """),
             {
                 "n": name,
                 "a": age,
                 "m": mobile,
-                "ad":address ,
+                "ad": address,
                 "d": district,
                 "s": state,
-                "h": health_problem,}
-                
+                "h": health_problem
+            }
         )
 
         conn.commit()
 
-    return {"Message":"Registration Successful"}
+    return {"message": "Registration Successful"}
 
-#gallery automatically uploads folder से photos दिखाएगी।
 
+# gallery automatically uploads folder से photos दिखाएगी।
 @app.get("/gallery", response_class=HTMLResponse)
 def gallery(request: Request):
 
     images = os.listdir("static/uploads")
 
     return templates.TemplateResponse(
-        "gallery.html",
-        {"request": request, "images": images}
+        request=request,
+        name="gallery.html",
+        context={
+            "request": request,
+            "images": images
+        }
     )
-
 
 # ADMIN AUTHENTICATION
 #Register
