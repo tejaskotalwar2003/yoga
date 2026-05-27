@@ -185,7 +185,37 @@ def hash_password(password: str):
 
 
 def verify_password(plain: str, hashed: str):
-    return pwd_context.verify(plain, hashed)
+    return pwd_context.verify(plain, hashed)def create_super_admin():
+
+    db = SessionLocal()
+
+    try:
+
+        existing = db.query(Admin).filter(
+            Admin.email == "tejaskotalwar07@gmail.com"
+        ).first()
+
+        if not existing:
+
+            admin = Admin(
+                name="Tejas Kotalwar",
+                email="tejaskotalwar07@gmail.com",
+                password=hash_password("Tejas@2003+-"),
+                role="super_admin",
+                is_approved=True
+            )
+
+            db.add(admin)
+
+            db.commit()
+
+    finally:
+        db.close()
+
+
+create_super_admin()
+
+
 
 
 # =========================
