@@ -168,30 +168,51 @@ def gallery(request: Request):
             "images": images
         }
     )
-
+# =========================
 # ADMIN AUTHENTICATION
-#Register
+# =========================
+
 from passlib.context import CryptContext
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
+
 
 def hash_password(password: str):
     return pwd_context.hash(password)
 
+
 def verify_password(plain: str, hashed: str):
     return pwd_context.verify(plain, hashed)
-    
+
+
+# =========================
+# REGISTER ADMIN
+# =========================
 @app.post("/register-admin")
 def register(admin: AdminCreate):
+
     db = SessionLocal()
 
     try:
-        existing = db.query(Admin).filter(Admin.email == admin.email).first()
+
+        existing = db.query(Admin).filter(
+            Admin.email == admin.email
+        ).first()
+
         if existing:
-            raise HTTPException(status_code=400, detail="Email already registered")
+            raise HTTPException(
+                status_code=400,
+                detail="Email already registered"
+            )
 
         if len(admin.password) < 6:
-            raise HTTPException(status_code=400, detail="Weak password")
+            raise HTTPException(
+                status_code=400,
+                detail="Weak password"
+            )
 
         hashed = hash_password(admin.password)
 
@@ -204,62 +225,107 @@ def register(admin: AdminCreate):
         )
 
         db.add(new_admin)
+
         db.commit()
 
-        return {"message": "Admin registered, waiting for approval"}
+        return {
+            "message": "Admin registered, waiting for approval"
+        }
 
     except Exception as e:
+
         db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
     finally:
         db.close()
 
 
-
-#Login
+# =========================
+# LOGIN SETTINGS
+# =========================
 SECRET_KEY = "mysecretkey"
 ALGORITHM = "HS256"
 
+
+# =========================
+# CREATE TOKEN
+# =========================
 def create_token(data: dict):
+
     to_encode = data.copy()
+
     expire = datetime.utcnow() + timedelta(hours=2)
+
     to_encode.update({"exp": expire})
 
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return jwt.encode(
+        to_encode,
+        SECRET_KEY,
+        algorithm=ALGORITHM
+    )
 
 
-from fastapi import Form
+# =========================
+# LOGIN
+# =========================
 @app.post("/login", response_class=HTMLResponse)
 def login(
     request: Request,
     email: str = Form(...),
     password: str = Form(...)
 ):
+
     db = SessionLocal()
 
     try:
-        admin = db.query(Admin).filter(Admin.email == email).first()
+
+        admin = db.query(Admin).filter(
+            Admin.email == email
+        ).first()
 
         if not admin:
-            return templates.TemplateResponse("login.html", {
-                "request": request,
-                "error": "Admin not found"
-            })
 
-        if not verify_password(password, admin.password):
-            return templates.TemplateResponse("login.html", {
-                "request": request,
-                "error": "Wrong password"
-            })
+            return templates.TemplateResponse(
+                request=request,
+                name="login.html",
+                context={
+                    "request": request,
+                    "error": "Admin not found"
+                }
+            )
+
+        if not verify_password(
+            password,
+            admin.password
+        ):
+
+            return templates.TemplateResponse(
+                request=request,
+                name="login.html",
+                context={
+                    "request": request,
+                    "error": "Wrong password"
+                }
+            )
 
         if admin.role == "admin" and not admin.is_approved:
-            return templates.TemplateResponse("login.html", {
-                "request": request,
-                "error": "Not Approved by Super Admin"
-            })
+
+            return templates.TemplateResponse(
+                request=request,
+                name="login.html",
+                context={
+                    "request": request,
+                    "error": "Not Approved by Super Admin"
+                }
+            )
 
         admin.last_login = datetime.utcnow()
+
         db.commit()
 
         token = create_token({
@@ -267,7 +333,10 @@ def login(
             "role": admin.role
         })
 
-        response = RedirectResponse(url="/admin_dashboard", status_code=303)
+        response = RedirectResponse(
+            url="/admin_dashboard",
+            status_code=303
+        )
 
         response.set_cookie(
             key="token",
@@ -281,29 +350,56 @@ def login(
     finally:
         db.close()
 
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi import Request
+
+# =========================
+# SECURITY
+# =========================
+from fastapi.security import HTTPBearer
+
 security = HTTPBearer()
 
-from fastapi import Request
 
+# =========================
+# VERIFY TOKEN
+# =========================
 def verify_token(request: Request):
+
     try:
+
         token = request.cookies.get("token")
 
         if not token:
-            raise HTTPException(status_code=401, detail="Not logged in")
+            raise HTTPException(
+                status_code=401,
+                detail="Not logged in"
+            )
 
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+
         return payload
 
     except JWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
 
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token"
+        )
+
+
+# =========================
+# LOGIN PAGE
+# =========================
 @app.get("/login-page", response_class=HTMLResponse)
 def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
-    
+
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html"
+    )
 
 # Pending Admins
 @app.get("/pending-admins")
