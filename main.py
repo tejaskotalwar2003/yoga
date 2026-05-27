@@ -613,8 +613,9 @@ async def submit_review(
     return {
         "message": "Review Submitted Successfully"
     }
-
-#admin update review
+# =========================
+# ADMIN UPDATE REVIEW
+# =========================
 @app.post("/admin/update_review/{id}")
 def update_review(
     id: int,
@@ -623,13 +624,16 @@ def update_review(
     rating: int = Form(...),
     health_improvement: str = Form(...),
     message: str = Form(...),
-    photo: UploadFile = File(None), user=Depends(verify_token)
+    photo: UploadFile = File(None),
+    user=Depends(verify_token)
 ):
 
     filename = None
 
     if photo and photo.filename:
+
         filename = photo.filename
+
         filepath = f"static/uploads/{filename}"
 
         with open(filepath, "wb") as buffer:
@@ -638,10 +642,12 @@ def update_review(
     with engine.connect() as conn:
 
         if filename:
+
             conn.execute(
                 text("""
                 UPDATE reviews
-                SET name=:name,
+                SET
+                    name=:name,
                     city=:city,
                     rating=:rating,
                     health_improvement=:health_improvement,
@@ -659,11 +665,14 @@ def update_review(
                     "id": id
                 }
             )
+
         else:
+
             conn.execute(
                 text("""
                 UPDATE reviews
-                SET name=:name,
+                SET
+                    name=:name,
                     city=:city,
                     rating=:rating,
                     health_improvement=:health_improvement,
@@ -682,38 +691,65 @@ def update_review(
 
         conn.commit()
 
-    return RedirectResponse("/admin/reviews", status_code=303)
+    return RedirectResponse(
+        url="/admin/reviews",
+        status_code=303
+    )
 
-#admin delete review
+
+# =========================
+# ADMIN DELETE REVIEW
+# =========================
 @app.post("/admin/delete_review/{id}")
-def delete_review(id: int, user=Depends(verify_token)):
+def delete_review(
+    id: int,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
+
         conn.execute(
             text("DELETE FROM reviews WHERE id=:id"),
             {"id": id}
         )
+
         conn.commit()
 
-    return RedirectResponse("/admin/reviews", status_code=303)
+    return RedirectResponse(
+        url="/admin/reviews",
+        status_code=303
+    )
 
-#admin upload page
+
+# =========================
+# ADMIN UPLOAD PAGE
+# =========================
 @app.get("/admin/upload", response_class=HTMLResponse)
-def upload_page(request: Request, user=Depends(verify_token)):
-    return templates.TemplateResponse("admin_upload.html", {"request": request})
+def upload_page(
+    request: Request,
+    user=Depends(verify_token)
+):
 
+    return templates.TemplateResponse(
+        request=request,
+        name="admin_upload.html"
+    )
+
+
+# =========================
 # ADD BRANCH
-from fastapi import Form
-from sqlalchemy import text
-
+# =========================
 @app.post("/add_branch")
 def add_branch(
+
     name: str = Form(...),
     address: str = Form(...),
     batch_time: str = Form(...),
     trainer: str = Form(...),
     contact: str = Form(...),
-    map_link: str = Form(...), user=Depends(verify_token)
+    map_link: str = Form(...),
+    user=Depends(verify_token)
+
 ):
 
     with engine.connect() as conn:
@@ -721,9 +757,24 @@ def add_branch(
         conn.execute(
             text("""
             INSERT INTO branches
-            (name, address, batch_time, trainer, contact, map_link)
+            (
+                name,
+                address,
+                batch_time,
+                trainer,
+                contact,
+                map_link
+            )
+
             VALUES
-            (:n, :a, :b, :t, :c, :m)
+            (
+                :n,
+                :a,
+                :b,
+                :t,
+                :c,
+                :m
+            )
             """),
             {
                 "n": name,
@@ -737,18 +788,26 @@ def add_branch(
 
         conn.commit()
 
-    return {"message": "Branch Added Successfully"}
+    return {
+        "message": "Branch Added Successfully"
+    }
 
-#Edit Branch
+
+# =========================
+# EDIT BRANCH
+# =========================
 @app.post("/edit_branch/{branch_id}")
 def edit_branch(
+
     branch_id: int,
     name: str = Form(...),
     address: str = Form(...),
     batch_time: str = Form(...),
     trainer: str = Form(...),
     contact: str = Form(...),
-    map_link: str = Form(...), user=Depends(verify_token)
+    map_link: str = Form(...),
+    user=Depends(verify_token)
+
 ):
 
     with engine.connect() as conn:
@@ -756,7 +815,8 @@ def edit_branch(
         conn.execute(
             text("""
             UPDATE branches
-            SET name=:n,
+            SET
+                name=:n,
                 address=:a,
                 batch_time=:b,
                 trainer=:t,
@@ -777,45 +837,69 @@ def edit_branch(
 
         conn.commit()
 
-    return RedirectResponse("/admin/branches", status_code=303)
+    return RedirectResponse(
+        url="/admin/branches",
+        status_code=303
+    )
 
 
-#Delete Branch
+# =========================
+# DELETE BRANCH
+# =========================
 @app.post("/delete_branch/{branch_id}")
-def delete_branch(branch_id: int, user=Depends(verify_token)):
+def delete_branch(
+    branch_id: int,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
+
         conn.execute(
             text("DELETE FROM branches WHERE id=:id"),
             {"id": branch_id}
         )
+
         conn.commit()
 
-    return RedirectResponse("/admin/branches", status_code=303)
+    return RedirectResponse(
+        url="/admin/branches",
+        status_code=303
+    )
 
 
-
-#show branches
+# =========================
+# ADMIN BRANCHES
+# =========================
 @app.get("/admin/branches", response_class=HTMLResponse)
-def admin_branches(request: Request, ):
+def admin_branches(
+    request: Request,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
         branches = conn.execute(
-            text("SELECT * FROM branches order by id desc")
+            text("SELECT * FROM branches ORDER BY id DESC")
         ).fetchall()
 
     return templates.TemplateResponse(
-        "admin_branches.html",
-        {
+        request=request,
+        name="admin_branches.html",
+        context={
             "request": request,
             "branches": branches
         }
     )
 
-#dashboard
+
+# =========================
+# DASHBOARD
+# =========================
 @app.get("/admin_dashboard", response_class=HTMLResponse)
-def dashboard(request: Request, user=Depends(verify_token)):
+def dashboard(
+    request: Request,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
@@ -831,14 +915,16 @@ def dashboard(request: Request, user=Depends(verify_token)):
             text("SELECT COUNT(*) FROM branches")
         ).scalar()
 
-    # gallery photos count (from folder)
     photos = len(os.listdir("static/uploads"))
 
-    today = datetime.now().strftime("%d %B %Y | %I:%M %p")
+    today = datetime.now().strftime(
+        "%d %B %Y | %I:%M %p"
+    )
 
     return templates.TemplateResponse(
-        "admin_dashboard.html",
-        {
+        request=request,
+        name="admin_dashboard.html",
+        context={
             "request": request,
             "users": users,
             "reviews": reviews,
@@ -848,9 +934,15 @@ def dashboard(request: Request, user=Depends(verify_token)):
         }
     )
 
-#admin registration check 
+
+# =========================
+# ADMIN USERS
+# =========================
 @app.get("/admin/users")
-def admin_users(request: Request):
+def admin_users(
+    request: Request,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
@@ -859,31 +951,47 @@ def admin_users(request: Request):
         ).fetchall()
 
     return templates.TemplateResponse(
-        "admin_registration.html",
-        {
+        request=request,
+        name="admin_registration.html",
+        context={
             "request": request,
             "users": users
         }
     )
 
-#delete registration
+
+# =========================
+# DELETE USER
+# =========================
 @app.post("/admin/delete_user/{id}")
-def delete_user(id:int, user=Depends(verify_token)):
+def delete_user(
+    id: int,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
         conn.execute(
-            text("DELETE FROM registrations WHERE id=:id"),
+            text("DELETE FROM users WHERE id=:id"),
             {"id": id}
         )
+
         conn.commit()
 
-    return RedirectResponse("/admin/users", status_code=303)
+    return RedirectResponse(
+        url="/admin/users",
+        status_code=303
+    )
 
 
-#Admin Reviews
+# =========================
+# ADMIN REVIEWS
+# =========================
 @app.get("/admin/reviews")
-def admin_reviews(request: Request, user=Depends(verify_token)):
+def admin_reviews(
+    request: Request,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
@@ -892,16 +1000,23 @@ def admin_reviews(request: Request, user=Depends(verify_token)):
         ).fetchall()
 
     return templates.TemplateResponse(
-        "admin_reviews.html",
-        {
+        request=request,
+        name="admin_reviews.html",
+        context={
             "request": request,
             "reviews": reviews
         }
     )
 
 
+# =========================
+# ADMIN GALLERY
+# =========================
 @app.get("/admin/gallery")
-def admin_gallery(request: Request, user=Depends(verify_token)):
+def admin_gallery(
+    request: Request,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
@@ -910,16 +1025,23 @@ def admin_gallery(request: Request, user=Depends(verify_token)):
         ).fetchall()
 
     return templates.TemplateResponse(
-        "admin_gallery.html",
-        {
+        request=request,
+        name="admin_gallery.html",
+        context={
             "request": request,
             "photos": photos
         }
     )
 
-    
+
+# =========================
+# UPLOAD PHOTO
+# =========================
 @app.post("/admin/upload_photo")
-async def upload_photo(photo: UploadFile = File(...), user=Depends(verify_token)):
+async def upload_photo(
+    photo: UploadFile = File(...),
+    user=Depends(verify_token)
+):
 
     file_location = f"static/images/{photo.filename}"
 
@@ -927,25 +1049,42 @@ async def upload_photo(photo: UploadFile = File(...), user=Depends(verify_token)
         shutil.copyfileobj(photo.file, buffer)
 
     with engine.connect() as conn:
+
         conn.execute(
-            text("INSERT INTO gallery(image) VALUES(:image)"),
-            {"image": photo.filename}
+            text("""
+            INSERT INTO gallery(image)
+            VALUES(:image)
+            """),
+            {
+                "image": photo.filename
+            }
         )
+
         conn.commit()
 
-    return RedirectResponse("/admin/gallery", status_code=303)
+    return RedirectResponse(
+        url="/admin/gallery",
+        status_code=303
+    )
 
 
-
-
-
+# =========================
+# DELETE PHOTO
+# =========================
 @app.post("/admin/delete_photo/{id}")
-def delete_photo(id:int, user=Depends(verify_token)):
+def delete_photo(
+    id: int,
+    user=Depends(verify_token)
+):
 
     with engine.connect() as conn:
 
         photo = conn.execute(
-            text("SELECT image FROM gallery WHERE id=:id"),
+            text("""
+            SELECT image
+            FROM gallery
+            WHERE id=:id
+            """),
             {"id": id}
         ).fetchone()
 
@@ -960,6 +1099,10 @@ def delete_photo(id:int, user=Depends(verify_token)):
                 text("DELETE FROM gallery WHERE id=:id"),
                 {"id": id}
             )
+
             conn.commit()
 
-    return RedirectResponse("/admin/gallery", status_code=303)
+    return RedirectResponse(
+        url="/admin/gallery",
+        status_code=303
+    )
