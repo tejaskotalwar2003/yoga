@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Donate - Nitya Yog</title>
+<title>Donate - Nitya Yog Samiti</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -18,249 +21,984 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Poppins',sans-serif;
+scroll-behavior:smooth;
 }
 
 body{
-background:linear-gradient(to right,#f0fdfa,#ecfeff);
+background:#f4fdfc;
+overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* ================= NAVBAR ================= */
+
 nav{
+background:rgba(15,118,110,0.95);
+backdrop-filter:blur(10px);
 display:flex;
 justify-content:space-between;
-padding:20px 8%;
+align-items:center;
+padding:15px 8%;
+position:sticky;
+top:0;
+z-index:999;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+color:white;
+}
+
+.logo img{
+width:58px;
+height:58px;
 background:white;
-box-shadow:0 5px 20px rgba(0,0,0,0.05);
+padding:5px;
+border-radius:12px;
+object-fit:contain;
+}
+
+.logo span{
+font-size:22px;
+font-weight:600;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+align-items:center;
 }
 
 nav a{
 text-decoration:none;
-color:#0f766e;
-margin-left:15px;
+color:white;
 font-weight:500;
+transition:0.3s;
 }
 
-/* HERO */
+nav a:hover{
+color:#99f6e4;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+position:absolute;
+top:120%;
+left:0;
+background:white;
+list-style:none;
+width:180px;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+z-index:999;
+}
+
+.dropdown:hover .dropdown-menu{
+opacity:1;
+visibility:visible;
+top:100%;
+}
+
+.dropdown-menu li{
+padding:12px 15px;
+}
+
+.dropdown-menu li:hover{
+background:#f0fdfa;
+}
+
+.dropdown-menu a{
+color:#333;
+}
+
+/* ================= MOBILE MENU ================= */
+
+.menu-btn{
+display:none;
+font-size:24px;
+color:white;
+cursor:pointer;
+}
+
+/* ================= DONATE BUTTON ================= */
+
+.join-btn{
+background:#14b8a6;
+padding:10px 20px;
+border-radius:30px;
+transition:0.3s;
+}
+
+.join-btn:hover{
+background:white;
+color:#0f766e;
+}
+
+/* ================= HERO ================= */
+
 .hero{
+min-height:75vh;
+background:
+linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
+url('https://images.unsplash.com/photo-1506126613408-eca07ce68773');
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-padding:60px 20px;
+padding:20px;
+color:white;
+}
+
+.hero-content{
+max-width:800px;
+animation:fadeUp 1s ease;
 }
 
 .hero h1{
-font-size:42px;
-color:#0f766e;
+font-size:60px;
+font-weight:700;
+line-height:1.2;
 }
 
 .hero p{
-margin-top:10px;
-color:#555;
+margin-top:20px;
+font-size:20px;
+color:#e5e7eb;
 }
 
-/* LAYOUT */
+.hero-btn{
+display:inline-block;
+margin-top:30px;
+padding:15px 35px;
+background:#14b8a6;
+color:white;
+border-radius:40px;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
+}
+
+.hero-btn:hover{
+transform:translateY(-5px);
+background:#0f766e;
+}
+
+/* ================= MAIN CONTAINER ================= */
+
 .container{
-display:flex;
+padding:80px 8%;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
 gap:40px;
-justify-content:center;
-padding:40px;
-flex-wrap:wrap;
 }
 
-/* CARD */
+/* ================= CARD ================= */
+
 .card{
 background:white;
 padding:35px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
-width:350px;
+border-radius:25px;
+box-shadow:0 15px 40px rgba(0,0,0,0.08);
+transition:0.4s;
+position:relative;
+overflow:hidden;
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:5px;
+background:linear-gradient(to right,#14b8a6,#0f766e);
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 50px rgba(0,0,0,0.12);
 }
 
 .card h2{
-margin-bottom:20px;
 color:#0f766e;
+margin-bottom:25px;
+font-size:28px;
 }
 
-/* INPUT */
+/* ================= INPUT ================= */
+
+.input-box{
+position:relative;
+margin-bottom:20px;
+}
+
+.input-box i{
+position:absolute;
+top:50%;
+left:15px;
+transform:translateY(-50%);
+color:#14b8a6;
+}
+
 input{
 width:100%;
-padding:14px;
-margin:10px 0;
-border-radius:12px;
+padding:15px 15px 15px 45px;
 border:1px solid #ddd;
+border-radius:14px;
+font-size:15px;
+outline:none;
+transition:0.3s;
 }
 
-/* AMOUNT */
+input:focus{
+border-color:#14b8a6;
+box-shadow:0 0 10px rgba(20,184,166,0.2);
+}
+
+/* ================= AMOUNT BUTTONS ================= */
+
 .amounts{
 display:flex;
-gap:10px;
+gap:12px;
+margin-bottom:20px;
 }
 
 .amounts button{
 flex:1;
-padding:10px;
+padding:12px;
 border:none;
-border-radius:20px;
-background:#e6fffa;
+border-radius:25px;
+background:#ecfeff;
+font-weight:600;
 cursor:pointer;
+transition:0.3s;
 }
 
 .amounts button:hover{
 background:#14b8a6;
 color:white;
+transform:scale(1.05);
 }
 
-/* BUTTON */
+/* ================= DONATE BUTTON ================= */
+
 .donate-btn{
 width:100%;
-padding:15px;
+padding:16px;
 border:none;
-border-radius:30px;
-background:#14b8a6;
+border-radius:35px;
+background:linear-gradient(to right,#14b8a6,#0f766e);
 color:white;
-font-size:16px;
-margin-top:15px;
+font-size:17px;
+font-weight:600;
 cursor:pointer;
+transition:0.3s;
 }
 
-/* TRUST */
+.donate-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(20,184,166,0.3);
+}
+
+/* ================= IMPACT ================= */
+
+.impact-item{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:20px;
+padding:15px;
+background:#f0fdfa;
+border-radius:14px;
+}
+
+.impact-item i{
+font-size:24px;
+color:#14b8a6;
+}
+
+/* ================= PROGRESS ================= */
+
 .progress{
-height:8px;
+height:10px;
 background:#ddd;
 border-radius:20px;
-margin:10px 0;
+overflow:hidden;
+margin:20px 0;
 }
 
 .progress-bar{
 height:100%;
 width:65%;
-background:#14b8a6;
+background:linear-gradient(to right,#14b8a6,#0f766e);
+border-radius:20px;
+animation:progressAnim 2s ease;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:25px;
+}
+
+.stat-box{
+background:#f0fdfa;
+padding:20px;
+border-radius:18px;
+text-align:center;
+}
+
+.stat-box h3{
+color:#0f766e;
+font-size:28px;
+}
+
+.stat-box p{
+font-size:14px;
+margin-top:5px;
+color:#666;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+background:#0f766e;
+color:white;
+text-align:center;
+padding:30px 20px;
+margin-top:60px;
+}
+
+.social-icons{
+margin-top:15px;
+display:flex;
+justify-content:center;
+gap:20px;
+}
+
+.social-icons a{
+color:white;
+font-size:22px;
+transition:0.3s;
+}
+
+.social-icons a:hover{
+transform:scale(1.2);
+color:#99f6e4;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes progressAnim{
+
+from{
+width:0;
+}
+
+to{
+width:65%;
+}
+
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+@media(max-width:992px){
+
+nav{
+padding:15px 5%;
+}
+
+.container{
+padding:60px 5%;
+gap:30px;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+}
+
+/* ================= TABLET ================= */
+
+@media(max-width:768px){
+
+.menu-btn{
+display:block;
+z-index:1001;
+}
+
+nav{
+padding:15px 20px;
+}
+
+.logo span{
+font-size:18px;
+}
+
+.logo img{
+width:50px;
+height:50px;
+}
+
+nav ul{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#0f766e;
+flex-direction:column;
+align-items:flex-start;
+padding:20px;
+display:none;
+gap:18px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+nav ul.show{
+display:flex;
+}
+
+.dropdown{
+width:100%;
+}
+
+.dropdown-menu{
+position:static;
+opacity:1;
+visibility:visible;
+display:none;
+width:100%;
+margin-top:10px;
+border-radius:10px;
+}
+
+.dropdown:hover .dropdown-menu{
+display:block;
+}
+
+.dropdown-menu li{
+padding:12px;
+}
+
+.hero{
+min-height:65vh;
+padding:40px 20px;
+}
+
+.hero h1{
+font-size:38px;
+line-height:1.3;
+}
+
+.hero p{
+font-size:16px;
+margin-top:15px;
+}
+
+.hero-btn{
+padding:14px 28px;
+font-size:15px;
+}
+
+.container{
+grid-template-columns:1fr;
+padding:40px 20px;
+gap:25px;
+}
+
+.card{
+padding:25px;
 border-radius:20px;
 }
 
-/* FOOTER */
-footer{
-text-align:center;
-padding:20px;
-background:#0f766e;
-color:white;
-margin-top:40px;
+.card h2{
+font-size:24px;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-.container{
+.amounts{
 flex-direction:column;
-align-items:center;
 }
+
+.amounts button{
+width:100%;
+}
+
+input{
+padding:14px 14px 14px 42px;
+font-size:14px;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+footer{
+padding:25px 15px;
+}
+
+.social-icons{
+gap:15px;
+}
+
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:480px){
+
+.hero h1{
+font-size:30px;
+}
+
+.hero p{
+font-size:15px;
+}
+
+.card{
+padding:20px;
+}
+
+.card h2{
+font-size:22px;
+}
+
+.logo span{
+font-size:16px;
+}
+
+.logo img{
+width:45px;
+height:45px;
+}
+
+.join-btn{
+padding:8px 16px;
+font-size:14px;
+}
+
+.hero-btn{
+width:100%;
+text-align:center;
+}
+
+.donate-btn{
+font-size:15px;
+padding:14px;
+}
+
+.stat-box h3{
+font-size:24px;
+}
+
+}
+
+/* ================= LARGE SCREEN ================= */
+
+@media(min-width:1400px){
+
+.container{
+max-width:1400px;
+margin:auto;
+}
+
+.hero h1{
+font-size:72px;
+}
+
+}
+
+.show-dropdown{
+display:block !important;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- ================= NAVBAR ================= -->
+
 <nav>
-<h2>Nitya Yog</h2>
-<div>
-<a href="index.html">Home</a>
-<a href="#">Donate</a>
+
+<div class="logo">
+
+<img src="/static/images/logo1.png" alt="Logo">
+
+<span>Nitya Yog Samiti</span>
+
 </div>
+
+<div class="menu-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<ul id="menu">
+
+<li><a href="/">Home</a></li>
+
+<li><a href="/aboutus">About Us</a></li>
+
+<li><a href="/branches">Branches</a></li>
+
+<li><a href="/reviews">Reviews</a></li>
+
+<li class="dropdown">
+
+<a href="#">Media <i class="fa fa-caret-down"></i></a>
+
+<ul class="dropdown-menu">
+
+<li><a href="/gallery">Photo Gallery</a></li>
+
+<li><a href="/videos">Videos</a></li>
+
+<li><a href="/events">Events</a></li>
+
+<li><a href="/news">News</a></li>
+
+</ul>
+
+</li>
+
+<li><a href="/committee">Committee</a></li>
+
+<li><a href="/faq">FAQ</a></li>
+
+<li><a href="/developer">Developer</a></li>
+
+<li>
+<a href="/donate" class="join-btn">Donate</a>
+</li>
+
+</ul>
+
 </nav>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
+
 <section class="hero">
-<h1>Support Our Mission 🙏</h1>
-<p>Help us build a healthier community</p>
-</section>
 
-<!-- MAIN -->
-<div class="container">
+<div class="hero-content">
 
-<!-- DONATE -->
-<div class="card">
+<h1>Support Yoga. Support Humanity 🙏</h1>
 
-<h2>Donate Now</h2>
+<p>
 
-<input type="text" id="name" placeholder="Your Name">
+Your donation helps us provide free yoga classes,
+meditation camps, wellness programs and community services.
 
-<div class="amounts">
-<button onclick="setAmount(100)">₹100</button>
-<button onclick="setAmount(500)">₹500</button>
-<button onclick="setAmount(1000)">₹1000</button>
+</p>
+
+<a href="#donate-section" class="hero-btn">
+
+Donate Now
+
+</a>
+
 </div>
 
-<input type="number" id="amount" placeholder="Enter amount">
+</section>
 
-<button class="donate-btn" onclick="donate()">Donate</button>
+<!-- ================= MAIN ================= -->
 
-<p style="font-size:12px;margin-top:10px;color:#777;">
+<section class="container" id="donate-section">
+
+<!-- DONATION CARD -->
+
+<div class="card">
+
+<h2>Make a Donation</h2>
+
+<div class="input-box">
+
+<i class="fas fa-user"></i>
+
+<input type="text" id="name" placeholder="Enter your name">
+
+</div>
+
+<div class="amounts">
+
+<button onclick="setAmount(100)">₹100</button>
+
+<button onclick="setAmount(500)">₹500</button>
+
+<button onclick="setAmount(1000)">₹1000</button>
+
+</div>
+
+<div class="input-box">
+
+<i class="fas fa-indian-rupee-sign"></i>
+
+<input type="number" id="amount" placeholder="Enter donation amount">
+
+</div>
+
+<button class="donate-btn" onclick="donate()">
+
+<i class="fas fa-heart"></i> Donate Securely
+
+</button>
+
+<p style="margin-top:15px;color:#666;font-size:13px;text-align:center;">
+
 🔒 Secure Payment Powered by Razorpay
+
 </p>
 
 </div>
 
-<!-- TRUST -->
+<!-- IMPACT CARD -->
+
 <div class="card">
 
-<h2>Impact</h2>
+<h2>Your Contribution Creates Impact</h2>
 
-<p>✔ Free Yoga Classes</p>
-<p>✔ Mental Health Support</p>
-<p>✔ Community Programs</p>
+<div class="impact-item">
+
+<i class="fas fa-spa"></i>
+
+<div>
+
+<h4>Free Yoga Classes</h4>
+
+<p>Helping people improve physical and mental health</p>
+
+</div>
+
+</div>
+
+<div class="impact-item">
+
+<i class="fas fa-heart"></i>
+
+<div>
+
+<h4>Mental Wellness</h4>
+
+<p>Reducing stress through meditation and pranayama</p>
+
+</div>
+
+</div>
+
+<div class="impact-item">
+
+<i class="fas fa-users"></i>
+
+<div>
+
+<h4>Community Programs</h4>
+
+<p>Organizing yoga camps and wellness drives</p>
+
+</div>
+
+</div>
 
 <div class="progress">
+
 <div class="progress-bar"></div>
-</div>
-
-<p>₹65,000 raised</p>
 
 </div>
 
+<p style="font-weight:600;color:#0f766e;">
+
+₹65,000 raised of ₹1,00,000 goal
+
+</p>
+
+<div class="stats">
+
+<div class="stat-box">
+
+<h3>1500+</h3>
+
+<p>Students</p>
+
 </div>
 
-<!-- FOOTER -->
+<div class="stat-box">
+
+<h3>25+</h3>
+
+<p>Branches</p>
+
+</div>
+
+<div class="stat-box">
+
+<h3>10+</h3>
+
+<p>Years</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
-© 2026 Nitya Yog Samiti
+
+<h2>Nitya Yog Samiti</h2>
+
+<p style="margin-top:10px;">
+
+Healthy Body • Peaceful Mind • Happy Life
+
+</p>
+
+<div class="social-icons">
+
+<a href="#"><i class="fab fa-instagram"></i></a>
+
+<a href="#"><i class="fab fa-facebook"></i></a>
+
+<a href="#"><i class="fab fa-youtube"></i></a>
+
+<a href="#"><i class="fab fa-whatsapp"></i></a>
+
+</div>
+
+<p style="margin-top:20px;font-size:14px;">
+
+© 2026 Nitya Yog Samiti. All Rights Reserved.
+
+</p>
+
 </footer>
 
 <script>
 
-function setAmount(val){
-document.getElementById("amount").value = val;
+/* ================= MOBILE MENU ================= */
+
+function toggleMenu(){
+
+document.getElementById("menu").classList.toggle("show");
+
 }
+
+/* ================= MOBILE DROPDOWN ================= */
+
+const dropdowns = document.querySelectorAll(".dropdown");
+
+dropdowns.forEach(drop => {
+
+drop.addEventListener("click", function(){
+
+if(window.innerWidth <= 768){
+
+this.querySelector(".dropdown-menu").classList.toggle("show-dropdown");
+
+}
+
+});
+
+});
+
+/* ================= SET DONATION AMOUNT ================= */
+
+function setAmount(val){
+
+document.getElementById("amount").value = val;
+
+}
+
+/* ================= RAZORPAY PAYMENT ================= */
 
 function donate(){
 
 let amount = document.getElementById("amount").value;
+
 let name = document.getElementById("name").value || "Supporter";
 
 if(!amount){
-alert("Enter amount");
+
+alert("Please enter donation amount");
+
 return;
+
 }
 
 var options = {
-  "key": "rzp_test_SaxX2UeOxwaNAv",  // 🔴 replace with your Razorpay key
-  "amount": amount * 100,
-  "currency": "INR",
-  "name": "Nitya Yog Samiti",
-  "description": "Donation",
-  
-  "handler": function (response){
-    alert("Payment Successful ✅");
-    window.location.href = "success.html";
-  },
 
-  "prefill": {
-    "name": name
-  },
+"key": "rzp_test_SaxX2UeOxwaNAv",
 
-  "theme": {
-    "color": "#14b8a6"
-  }
+"amount": amount * 100,
+
+"currency": "INR",
+
+"name": "Nitya Yog Samiti",
+
+"description": "Donation",
+
+"handler": function (response){
+
+alert("Payment Successful ✅");
+
+window.location.href="/success";
+
+},
+
+"prefill": {
+
+"name": name
+
+},
+
+"theme": {
+
+"color": "#14b8a6"
+
+}
+
 };
 
 var rzp = new Razorpay(options);
+
 rzp.open();
 
 }
@@ -269,3 +1007,4 @@ rzp.open();
 
 </body>
 </html>
+```
